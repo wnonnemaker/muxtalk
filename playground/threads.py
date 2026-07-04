@@ -18,5 +18,6 @@ if __name__ == "__main__":
     thread2 = threading.Thread(target=thread_function, args=(2,))
 
     thread1.start()
+    print("I waited for the join")
     thread2.start()
 

@@ -1,0 +1,59 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "open_application",
+            "description": "Open an application on the user's computer",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "application": {
+                        "type": "string",
+                        "description": "The name of the application: e.g. pavucontrol, brave web browser, alacritty terminal emulator. The provided application should only be a binary, so it should only be one word, never provide more than one word or application with spaces"
+                    }
+                },
+                "required": ["application"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "display_ledger_file",
+            "description": "display the user's ledger file. Use this before modifying the content of the ledger file."
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_ledger_entry",
+            "description": "generate a ledger file entry based on the user's current ledger file. This includes a date, description, a debit, and a credit entry",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "debit_account": {
+                        "type": "string",
+                        "description": "The name of the account to be debited. E.g. assets:cash, revenues:software, liabilities:creditcard"
+                    },
+                    "debit_amount": {
+                        "type": "string",
+                        "description": "The amount to be debited from the account. This should be a number with up to two decimal places and NO dollar sign. E.g. 800, 57.34, 0.03, 1237.45"
+                    },
+                    "credit_account": {
+                        "type": "string",
+                        "description": "The name of the account to be credited. E.g. assets:cash, revenues:software, liabilities:creditcard. If no account is provided, then default to liabilities:creditcard"
+                    },
+                    "credit_amount": {
+                        "type": "string",
+                        "description": "The amount to be credited from the account. This should be a number with up to two decimal places and NO dollar sign. E.g. 800, 57.34, 0.03, 1237.45"
+                    },
+                    "entry_description": {
+                        "type": "string",
+                        "description": "A description of the entry. E.g. pay rent, dinner with parents, payment from Mary"
+                    }
+                },
+                "required": ["debit_amount","credit_amount", "credit_account", "debit_account", "entry_description"]
+            }
+        }
+    }
+]
