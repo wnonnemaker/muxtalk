@@ -1,0 +1,256 @@
+account assets             ; type: A
+account liabilities        ; type: L
+account equity             ; type: E
+account revenues           ; type: R
+account expenses           ; type: X
+
+account assets:checking        ; type: C
+account assets:cash        ; type: C
+
+
+
+
+2026-05-01 set initial assets balance
+    assets:checking              8297.54
+    equity:opening balances
+
+2026-05-01 set initial assets venmo
+    assets:venmo              210.95
+    equity:opening balances
+
+2026-05-01 set initial credit card balance
+    equity:opening balances
+    liabilities:creditcard              -1542.24
+
+2026-05-01 set initial credit card balance plus 80
+    equity:opening balances
+    liabilities:creditcard              -80.17
+
+2026-05-04 pay chase card
+    liabilities:creditcard                1542.24
+    assets:checking
+
+2026-05-04 pay chase card autopay
+    liabilities:creditcard                80.17
+    assets:checking
+
+2026-05-04 pay discover card
+    liabilities:creditcarddiscover                7.98
+    assets:checking
+
+2026-05-04 gas
+    expenses:gas                  100
+    liabilities:creditcard                -100
+
+2026-05-04 mary k check
+    assets:checking               1000
+    revenues:software	
+
+2026-05-04 pay rent
+    expenses:rent              800
+    assets:checking 
+
+2026-05-06 eagle liquor ipa and hot cheetos
+    expenses:food                  11.70
+    liabilities:creditcard                
+
+2026-05-07 t-hill food for will and claire
+    expenses:food                  43.08
+    liabilities:creditcard                
+
+2026-05-07 t-hill liquid candy
+    expenses:food                  10.32
+    liabilities:creditcard                
+
+2026-05-07 WAC payment
+    assets:checking		1290.80
+    revenues:tennis                  
+
+2026-05-20 WAC payment
+    assets:checking		1279.60
+    revenues:tennis                  
+
+2026-05-06 tax refund
+    assets:checking		129.00
+    revenues:misc                  
+
+2026-05-08 vons burrito and bread
+    expenses:food                  9.41
+    liabilities:creditcard                
+
+2026-05-08 habit westlake
+    expenses:food                  10.27
+    liabilities:creditcard                
+
+2026-05-09 Los Dos Amigos dinner w friends
+    expenses:food                  150.69
+    liabilities:creditcard                
+
+2026-05-09 venmo from tim for LOSDOSAMIGOS
+    assets:venmo                  42
+    revenues:venmo                
+
+2026-05-10 amazon floss pics
+    expenses:misc                  10.71
+    liabilities:creditcard                
+
+2026-05-10 salvation army sweatpants
+    expenses:clothes                  9.00
+    liabilities:creditcard                
+
+2026-05-11 Supercuts Westlake
+    liabilities:creditcard         -40.00
+    expenses:misc                   40.00
+
+2026-05-12 McDonalds 33006
+    liabilities:creditcard         -10.25
+    expenses:food                   10.25
+
+2026-05-13 PAYPAL *LINK2GOVCOR L2
+    liabilities:creditcard          -2.50
+    expenses:misc                    2.50
+
+2026-05-13 PAYPAL *LINK2GOVCOR US
+    liabilities:creditcard         -27.25
+    expenses:misc                   27.25
+
+2026-05-13 VONS #3135
+    liabilities:creditcard         -31.41
+    expenses:food                   31.41
+
+2026-05-14 SP PAXTONGATE
+    liabilities:creditcard         -65.18
+    expenses:misc                   65.18
+
+2026-05-14 BI-RITE MARKET
+    liabilities:creditcard          -4.93
+    expenses:food                    4.93
+
+2026-05-14 EXXON MISKINNIS ENTERP
+    liabilities:creditcard         -60.42
+    expenses:gas                    60.42
+
+2026-05-14 Clipper card
+    liabilities:creditcard         -10.00
+    expenses:misc                    10.00
+
+2026-05-14 Panchitas restaurant
+    liabilities:creditcard         -9.60
+    expenses:food                    9.60
+
+2026-05-14 MISS SAIGON
+    liabilities:creditcard         -11.02
+    expenses:food                    
+
+2026-05-15 IBS in Oakland sandwich
+    liabilities:creditcard         -16.62
+    expenses:food                    
+
+2026-05-15 CAFFE CHIAVE oakland
+    liabilities:creditcard         -12.13
+    expenses:food                    
+
+2026-05-15 ME AND JUNGLE CAFE
+    liabilities:creditcard         -40.00
+    expenses:food                    
+
+2026-05-15 CVS
+    liabilities:creditcard         -9.95
+    expenses:misc                    
+
+2026-05-15 CVS
+    liabilities:creditcard         -10.51
+    expenses:misc                    
+
+2026-05-16 GRAND GAS oakland trip gas
+    liabilities:creditcard         -100
+    expenses:gas                    
+
+2026-05-16 GRAND GAS water and hot cheetos
+    liabilities:creditcard         -9.63
+    expenses:food                    
+
+2026-05-19 amazon notebooks for math and projects
+    liabilities:creditcard         -12.32
+    expenses:business                    
+
+2026-05-19 SUSHI PLANET 
+    liabilities:creditcard         -72.92
+    expenses:food                    
+
+2026-05-19 deepseek creds
+    expenses:business                    2.12
+    liabilities:creditcard
+
+2026-05-24 amazon lewis carrol symbolic logic
+    expenses:misc                    14.20
+    liabilities:creditcard
+
+2026-05-24 amazon neti pot
+    expenses:misc                    32.12
+    liabilities:creditcard
+
+2026-05-24 target notebooks, socks, underwear
+    expenses:misc                    58.23
+    liabilities:creditcard
+
+2026-05-24 tsa precheck application
+    expenses:misc                    69.95
+    liabilities:creditcard
+
+2026-05-24 vons fried chicken
+    expenses:food                    5.66
+    liabilities:creditcard
+
+2026-05-24 sinclaire gas
+    expenses:gas                    102.41
+    liabilities:creditcard
+
+2026-05-10 iCloud subscription
+    expenses:monthly                    0.99
+    liabilities:creditcard
+
+2026-05-28 Claude subscription
+    expenses:monthly                    20.00
+    liabilities:creditcard
+
+2026-05-02 Spotify subscription
+    expenses:monthly                    12.99
+    liabilities:creditcard
+
+2026-05-11 NYT subscription
+    expenses:monthly                    12.00
+    liabilities:creditcard
+
+2026-05-28 Tennis warehouse shoes and grommets
+    expenses:tennis                    104.94
+    liabilities:creditcard
+
+2026-05-26 starbucks coffee 
+    expenses:food                    5.75
+    liabilities:creditcard
+
+2026-05-26 symbolic logic amazon
+    expenses:misc                    5.75
+    liabilities:creditcard
+
+2026-07-04 mary colvin gift
+    assets:checking    100
+    revenues:gifts    100
+
+2026-07-04 Dan milestone one payment
+    assets:checking    6000
+    revenues:software    6000
+
+2026-07-05 McDonalds cheeseburger
+    expenses:food    10
+    liabilities:creditcard    10
+
+2026-07-05 bonds grocery run
+    expenses:food    6.62
+    liabilities:creditcard    6.62
+
+2026-07-05 gas station
+    expenses:gas    48.30
+    liabilities:creditcard    48.30
+

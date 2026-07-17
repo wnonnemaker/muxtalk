@@ -34,6 +34,40 @@ def noalsaerr():
     yield
     asound.snd_lib_error_set_handler(None)
 
+def send_messages(messages, tools):
+    response = client.chat.completions.create(
+        model="claude-haiku-4-5",
+        messages=messages,
+        tools=tools
+    )
+    return response.choices[0].message
+
+def build_mode_json():
+    input_path = "modes.txt"  # path to the text file to read
+
+    with open(input_path, "r", encoding="utf-8") as f:
+        description = f.read().strip()
+
+    return [
+        {
+            "type": "function",
+            "function": {
+                "name": "choose_mode",
+                "description": description,
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "mode": {
+                            "type": "string",
+                            "enum": ["sys_admin", "accountant"],
+                        }
+                    },
+                    "required": ["mode"],
+                },
+            },
+        }
+    ]
+
 class Conductor():
     def __init__(self):
         #keyboard event listener
@@ -42,6 +76,7 @@ class Conductor():
         self.audio_converter = AudioConverter()
         #llm tool coordinator
         self.tool_runner = ToolRunner()
+        self.ubix_mode = "sys_admin"
 
     def start_listener(self):
         self.listener = Listener(on_press = self.on_press)
@@ -58,7 +93,7 @@ class Conductor():
                 #next line
                 self.audio_converter.stop_recording()
                 command = self.audio_converter.transcribe()
-                self.tool_runner.execute(command)
+                mode = self.tool_runner.execute(command)
 
 
         if key == Key.delete: 
@@ -69,7 +104,6 @@ class AudioConverter():
         self.recorder = threading.Thread(target=self.record, daemon=False)
         self.should_record = False
         self.transcriber = threading.Thread(target=self.transcribe, daemon=False)
-        self.chatter = None
 
     def transcribe(self):
         model = Model('base.en')
@@ -82,6 +116,7 @@ class AudioConverter():
         #server = libtmux.Server()
         #claude = server.sessions[3].windows[0].panes[0]
         #claude.send_keys(fulltext, enter=True)
+        os.remove('output.wav')
         print(fulltext)
         return fulltext
 
@@ -121,43 +156,6 @@ class AudioConverter():
         wf.close()
         print('recorded audio file')
 
-    def chat(self, fulltext):
-        from openai import OpenAI
-        import os
-        import json
-        api_key = os.environ.get("DEEPSEEK_API_KEY")
-
-        def send_messages(messages):
-            response = client.chat.completions.create(
-                model="deepseek-v4-pro",
-                messages=messages,
-                tools=tools
-            )
-            return response.choices[0].message
-
-        client = OpenAI(
-            api_key=api_key,
-            base_url="https://api.deepseek.com",
-        )
-
-        with open("functions.json") as f:
-            tools = json.load(f)
-
-        messages = [{"role": "user", "content": fulltext}]
-        message = send_messages(messages)
-        print(f"message: \t{message}")
-        print(f"User>\t {messages[0]['content']}")
-
-        tool = message.tool_calls[0]
-        args = json.loads(tool.function.arguments)
-        application = args["application"]  # e.g. "brave"
-        os.system(f"{application} &")
-        print(f"Tool: \t{tool}")
-        messages.append(message)
-
-        message = send_messages(messages)
-        print(f"Model>\t {message.content}")
-
     def start_recording(self):
         self.should_record = True
         self.recorder.start()
@@ -171,9 +169,36 @@ class ToolRunner():
     def __init__(self):
         self.name = "John"
 
+    def execute_tool(self, tool, arguments):
+        args = json.loads(arguments)
+        ledger_path = "/home/will/projects/software/ubix/files/pyubix/test.journal"
+        match tool:
+            case "open_application":
+                application = args['application']
+                result = os.system(f"{application} &")
+                print(result)
+                return f"{application} opened with result {result}"
+            case "display_ledger_file":
+                with open(ledger_path) as f:
+                    return f.read()
+            case "create_ledger_entry":
+                date = datetime.today().strftime('%Y-%m-%d')
+                ledger_entry = (
+                    f"{date} {args['entry_description']}\n"
+                    f"    {args['debit_account']}    {args['debit_amount']}\n"
+                    f"    {args['credit_account']}    {args['credit_amount']}\n\n"
+                )
+                with open(ledger_path, "a") as f:
+                    f.write(ledger_entry)
+                return f"Added entry:\n{ledger_entry}"
+            case "choose_mode":
+                with open(ledger_path) as f:
+                    return f.read()
+            case _:
+                return "nocommand"
+
     def execute(self, command):
         api_key = os.environ.get("DEEPSEEK_API_KEY")
-        ledger_path = os.environ.get("LEDGER_FILE")
 
         client = OpenAI(
             api_key=api_key,
@@ -186,62 +211,39 @@ class ToolRunner():
         with open("prompt.md") as f:
             prompt = f.read()
 
-        messages = []
+        mode_selection_json = build_mode_json()
+
         messages = [
                 {"role" : "user", "content": command},
                 {"role" : "system", "content": prompt}
                 ]
+
         response = client.chat.completions.create(
             model="deepseek-v4-pro",
             messages = messages,
             tools = tools
         )
+
+        message = send_messages(messages, tools)
+
         #here we are adding the tool_calls evidence?
-        messages.append(response.choices[0].message)
-        print(f'System> {response.choices[0].message.content}')
-        while(True):
-            if not response.choices[0].message.tool_calls:
-                print(f'System> {response.choices[0].message.content}')
-                break
+        messages.append(message)
+        print(f'System> {message.content}')
+        while(message.tool_calls):
             tool = response.choices[0].message.tool_calls[0]
             tool_name = tool.function.name
             tool_id = tool.id
             tool_args = tool.function.arguments
 
-            result = execute_tool(tool_name, tool_args)
+            result = self.execute_tool(tool_name, tool_args)
+            #add tool call result to messages history
             message = {"role" : "tool", "tool_call_id": tool_id, "content" : result}
             messages.append(message)
-            response = client.chat.completions.create(
-                model="deepseek-v4-pro",
-                messages = messages,
-                tools = tools
-            )
-            messages.append(response.choices[0].message)
-            print("Done with second call!")
-
-        def execute_tool(tool, arguments):
-            args = json.loads(arguments)
-            match tool:
-                case "open_application":
-                    application = args['application']
-                    result = os.system(f"{application} &")
-                    print(result)
-                    return f"{application} opened with result {result}"
-                case "display_ledger_file":
-                    with open(ledger_path) as f:
-                        return f.read()
-                case "create_ledger_entry":
-                    date = datetime.today().strftime('%Y-%m-%d')
-                    ledger_entry = (
-                        f"{date} {args['entry_description']}\n"
-                        f"    {args['debit_account']}    {args['debit_amount']}\n"
-                        f"    {args['credit_account']}    {args['credit_amount']}\n\n"
-                    )
-                    with open(ledger_path, "a") as f:
-                        f.write(ledger_entry)
-                    return f"Added entry:\n{ledger_entry}"
-                case _:
-                    return "nocommand"
+            #send new history to model
+            message = send_messages(messages, tools)
+            messages.append(message)
+        print(f'System> {message.content}')
+        return self.mode
 
 
 

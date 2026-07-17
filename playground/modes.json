@@ -1,0 +1,36 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "change_mode",
+            "description": "change the user's mode",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "word": {
+                        "type": "string",
+                        "description": "The word the user supplies"
+                    }
+                },
+                "required": ["word"]
+            }
+        }
+    }
+    {
+        "type": "function",
+        "function": {
+            "name": "",
+            "description": "print a given word",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "word": {
+                        "type": "string",
+                        "description": "The word the user supplies"
+                    }
+                },
+                "required": ["word"]
+            }
+        }
+    }
+]

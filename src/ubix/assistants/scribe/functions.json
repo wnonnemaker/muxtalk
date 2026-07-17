@@ -1,0 +1,34 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "set_session_window_pane",
+            "description": "determines what session name, window number, and pane number the user wants to set as their target tmux window",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "session_name": {
+                        "type": "string",
+                        "description": "the name of the tmux session"
+                    },
+                    "window_number": {
+                        "type": "string",
+                        "description": "the window number of the tmux session"
+                    },
+                    "pane_number": {
+                        "type": "string",
+                        "description": "the pane number of the tmux session"
+                    }
+                },
+                "required": ["session_name","window_number", "pane_number"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "fallback",
+            "description": "if the message is anything other than set pane or change mode, use this fallback function"
+        }
+    }
+]

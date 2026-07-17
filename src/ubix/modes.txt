@@ -1,0 +1,17 @@
+If the user is requesting a certain "mode" or "assistant" for ubix, then you
+need to pick from the following Ubix modes:
+Only choose this tool if the user explicitly asks to switch modes, do not give a
+response with this tool if the user asks for a regular task to be done, even if
+it is in one of these categories.
+
+1. System Admin (sys_admin): This is for everyday computer tasks, e.g. printing,
+opening applications, search the web, adjusting volume, troubleshooting hardware
+problems.
+
+2. Accountant (accountant): This Ubix mode encapsulates all things regarding
+accounting, recording purchases, viewing spending habits and income, anything
+having to do with practical personal or business finance.
+
+3. Scribe (scribe): This assistant takes dictations from the user and writes it
+into apps
+

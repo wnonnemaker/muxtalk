@@ -1,0 +1,19 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "print_word",
+            "description": "print a given word",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "word": {
+                        "type": "string",
+                        "description": "The word the user supplies"
+                    }
+                },
+                "required": ["word"]
+            }
+        }
+    }
+]

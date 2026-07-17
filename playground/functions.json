@@ -1,4 +1,5 @@
 [
+
     {
         "type": "function",
         "function": {
@@ -53,6 +54,48 @@
                     }
                 },
                 "required": ["debit_amount","credit_amount", "credit_account", "debit_account", "entry_description"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "set_session_window_pane",
+            "description": "determines what session name, window number, and pane number the user wants to set as their target tmux window",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "session_name": {
+                        "type": "string",
+                        "description": "the name of the tmux session"
+                    },
+                    "window_number": {
+                        "type": "string",
+                        "description": "the window number of the tmux session"
+                    },
+                    "pane_number": {
+                        "type": "string",
+                        "description": "the pane number of the tmux session"
+                    }
+                },
+                "required": ["session_name","window_number", "pane_number"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "talk",
+            "description": "if not an explicit message to change mode or change target tmux pane, and ubix is in scribe mode, pick this tool. The user is dictating and wants this to be injected",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "speech": {
+                        "type": "string",
+                        "description": "what the user wants to have dictated"
+                    }
+                },
+                "required": ["speech"]
             }
         }
     }
