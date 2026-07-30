@@ -1,0 +1,825 @@
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.462 s
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 101, in on_press
+    command = self.audio_converter.transcribe()
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/audio_converter.py", line 48, in transcribe
+    os.remove('output.wav')
+    ~~~~~~~~~^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'output.wav'
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:audio_converter:Finished recording
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.620 s
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/.local/bin/ubix", line 101, in on_press
+    command = self.audio_converter.transcribe()
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/audio_converter.py", line 48, in transcribe
+    os.remove('output.wav')
+    ~~~~~~~~~^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'output.wav'
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.974 s
+INFO:audio_converter:Transcribed text: Hello.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Booting...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.036 s
+INFO:audio_converter:Transcribed text: Hello.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Booting...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.267 s
+INFO:audio_converter:Transcribed text: Hello.
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 129, in on_press
+    self.ubox_input(command)
+    ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 111, in ubox_input
+    fifo.write(f'{input}\n')
+    ^^^^
+NameError: name 'fifo' is not defined
+INFO:pywhispercpp.model:Inference time: 1.289 s
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/.local/bin/ubix", line 101, in on_press
+    cmd_list = alacritty_cmd.split(" ")
+                      ~~~~~~~~~~~~^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/audio_converter.py", line 48, in transcribe
+    os.remove('output.wav')
+    ~~~~~~~~~^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'output.wav'
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.996 s
+INFO:audio_converter:Transcribed text: [BLANK_AUDIO]
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/.local/bin/ubix", line 129, in on_press
+    def on_press(self, key):
+                ^^^^^^^^^^^^
+  File "/home/will/.local/bin/ubix", line 111, in ubox_input
+NameError: name 'fifo' is not defined
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:__main__:Key pressed: 'l'
+INFO:__main__:Key pressed: 'l'
+INFO:__main__:Key pressed: Key.ctrl
+INFO:__main__:Key pressed: 'd'
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:__main__:Key pressed: Key.alt
+INFO:__main__:Key pressed: Key.ctrl
+INFO:__main__:Key pressed: 'b'
+INFO:__main__:Key pressed: 'h'
+INFO:__main__:Key pressed: '/'
+INFO:__main__:Key pressed: 'k'
+INFO:__main__:Key pressed: 'e'
+INFO:__main__:Key pressed: 'y'
+INFO:__main__:Key pressed: 'p'
+INFO:__main__:Key pressed: Key.backspace
+INFO:__main__:Key pressed: Key.backspace
+INFO:__main__:Key pressed: Key.backspace
+INFO:__main__:Key pressed: Key.backspace
+INFO:__main__:Key pressed: Key.shift
+INFO:__main__:Key pressed: 'K'
+INFO:__main__:Key pressed: 'e'
+INFO:__main__:Key pressed: 'y'
+INFO:__main__:Key pressed: Key.space
+INFO:__main__:Key pressed: 'p'
+INFO:__main__:Key pressed: 'r'
+INFO:__main__:Key pressed: 'e'
+INFO:__main__:Key pressed: 's'
+INFO:__main__:Key pressed: 's'
+INFO:__main__:Key pressed: Key.enter
+INFO:__main__:Key pressed: 'd'
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.988 s
+INFO:audio_converter:Transcribed text: Hello, you bigs.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Booting...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.959 s
+INFO:audio_converter:Transcribed text: Hello.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Booting...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.965 s
+INFO:audio_converter:Transcribed text: Hello.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 153, in on_press
+    output = self.tool_runner.execute(command)
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/tool_runner.py", line 169, in execute
+    for i in range(0, len(message.tool_calls)):
+                      ~~~^^^^^^^^^^^^^^^^^^^^
+TypeError: object of type 'NoneType' has no len()
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.969 s
+INFO:audio_converter:Transcribed text: Hello.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 154, in on_press
+    output = self.tool_runner.execute(command)
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/tool_runner.py", line 169, in execute
+    for i in range(0, len(message.tool_calls)):
+                      ~~~^^^^^^^^^^^^^^^^^^^^
+TypeError: object of type 'NoneType' has no len()
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.960 s
+INFO:audio_converter:Transcribed text: Hello.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 154, in on_press
+    output = self.tool_runner.execute(command)
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/tool_runner.py", line 187, in execute
+    result = self.execute_tool("chat", [], "")
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/tool_runner.py", line 91, in execute_tool
+    args = json.loads(arguments)
+  File "/usr/lib/python3.14/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not list
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.968 s
+INFO:audio_converter:Transcribed text: Hello.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.988 s
+INFO:audio_converter:Transcribed text: Switch to scribe.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 154, in on_press
+    output = self.tool_runner.execute(command)
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/tool_runner.py", line 174, in execute
+    logging.info(f'tool name: {tool_name} result: {result}')
+    ^^^^^^^
+NameError: name 'logging' is not defined. Did you forget to import 'logging'?
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.977 s
+INFO:audio_converter:Transcribed text: which to scribe.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: change_mode result: tool: change_mode
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.051 s
+INFO:audio_converter:Transcribed text: Hello Bash!
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.995 s
+INFO:audio_converter:Transcribed text: Change target to sys 1 0.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: set_session_window_pane result: tool: set_session_window_pane
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.384 s
+INFO:audio_converter:Transcribed text: Add keybinds to my i3 config, one for alt U, that focuses the floating term window rule,one for alt shift U that hides the float term window.And these are both toggles, so pressing it once will hide it, pressing it again, willbring it back into focus.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: set_session_window_pane result: there was a tool execution error!
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.999 s
+INFO:audio_converter:Transcribed text: Do you like my friend Ryan?
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.998 s
+INFO:audio_converter:Transcribed text: What mode are you in right now?
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.996 s
+INFO:audio_converter:Transcribed text: Switch to scribe mode.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: change_mode result: tool: change_mode
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.077 s
+INFO:audio_converter:Transcribed text: Once the window is hidden, the Alt Shift U keybind does not bring it back up.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.989 s
+INFO:audio_converter:Transcribed text: Change to scribe mode.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: change_mode result: tool: change_mode
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.153 s
+INFO:audio_converter:Transcribed text: I would like you to change the float term rule so that it is taller and less wide.And also, yeah, try that.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.984 s
+INFO:audio_converter:Transcribed text: Open volume control.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: open_application result: pavucontrol opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.993 s
+INFO:audio_converter:Transcribed text: is Ryan based or cringe?
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.001 s
+INFO:audio_converter:Transcribed text: Open up my Bluetooth manager.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: open_application result: pavucontrol opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.988 s
+INFO:audio_converter:Transcribed text: Open volume control.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: open_application result: pavucontrol opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.003 s
+INFO:audio_converter:Transcribed text: Open my Latin textbook.
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 154, in on_press
+    output = self.tool_runner.execute(command)
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/tool_runner.py", line 171, in execute
+    logger.info(f'tool name: {tool_name} context: {self.mode_context}')
+                              ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'tool_name' where it is not associated with a value
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.007 s
+INFO:audio_converter:Transcribed text: Open my Latin textbook.
+INFO:tool_runner:mode: sys_admin context: Here is some useful context for executing commands in sys_admin mode: GUI Applications
+================
+
+Application       Description
+-----------       -----------
+alacritty         Fast, GPU-accelerated terminal emulator
+brave             Privacy-focused Chromium-based web browser
+firefox           Mozilla's open-source web browser
+blueman-manager   GUI for managing Bluetooth devices and connections
+feh               Lightweight image viewer, also used for setting wallpapers
+okular            KDE document viewer supporting PDF, ePub, and many other formats
+pavucontrol       PulseAudio volume control — manage per-app audio levels and devices
+localsend         Cross-platform LAN file sharing (like AirDrop)
+
+Documents for Okular if chosen
+discrete math textbook /home/will/projects/learning/math/discreteandapps/files/7theditiondiscreteandapps.pdf
+discrete math students guide /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
+latin wheellock textbook /home/will/projects/learning/latin/files/wheellockpdf.pdf
+lingua latina per se illustrata /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+
+
+
+
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: open_document result: Error: selected tool did not match any cases
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.994 s
+INFO:audio_converter:Transcribed text: Open my Latin textbook.
+INFO:tool_runner:mode: sys_admin context: Here is some useful context for executing commands in sys_admin mode: GUI Applications
+================
+
+Application       Description
+-----------       -----------
+alacritty         Fast, GPU-accelerated terminal emulator
+brave             Privacy-focused Chromium-based web browser
+firefox           Mozilla's open-source web browser
+blueman-manager   GUI for managing Bluetooth devices and connections
+feh               Lightweight image viewer, also used for setting wallpapers
+okular            KDE document viewer supporting PDF, ePub, and many other formats
+pavucontrol       PulseAudio volume control — manage per-app audio levels and devices
+localsend         Cross-platform LAN file sharing (like AirDrop)
+
+Documents for Okular if chosen
+discrete math textbook /home/will/projects/learning/math/discreteandapps/files/7theditiondiscreteandapps.pdf
+discrete math students guide /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
+latin wheellock textbook /home/will/projects/learning/latin/files/wheellockpdf.pdf
+lingua latina per se illustrata /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+
+
+
+
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:tool name: open_application result: okular opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 1.006 s
+INFO:audio_converter:Transcribed text: Open my Latin textbook.
+INFO:tool_runner:mode: sys_admin context: Here is some useful context for executing commands in sys_admin mode: GUI Applications
+================
+
+Application       Description
+-----------       -----------
+alacritty         Fast, GPU-accelerated terminal emulator
+brave             Privacy-focused Chromium-based web browser
+firefox           Mozilla's open-source web browser
+blueman-manager   GUI for managing Bluetooth devices and connections
+feh               Lightweight image viewer, also used for setting wallpapers
+okular            KDE document viewer supporting PDF, ePub, and many other formats
+pavucontrol       PulseAudio volume control — manage per-app audio levels and devices
+localsend         Cross-platform LAN file sharing (like AirDrop)
+
+Documents for Okular if chosen
+discrete math textbook /home/will/projects/learning/math/discreteandapps/files/7theditiondiscreteandapps.pdf
+discrete math students guide /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
+latin wheellock textbook /home/will/projects/learning/latin/files/wheellockpdf.pdf
+lingua latina per se illustrata /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+
+
+
+
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:file path chosen: okular /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+INFO:tool_runner:tool name: open_application result: okular /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.995 s
+INFO:audio_converter:Transcribed text: Open my wheel lock textbook.
+INFO:tool_runner:mode: sys_admin context: Here is some useful context for executing commands in sys_admin mode: GUI Applications
+================
+
+Application       Description
+-----------       -----------
+alacritty         Fast, GPU-accelerated terminal emulator
+brave             Privacy-focused Chromium-based web browser
+firefox           Mozilla's open-source web browser
+blueman-manager   GUI for managing Bluetooth devices and connections
+feh               Lightweight image viewer, also used for setting wallpapers
+okular            KDE document viewer supporting PDF, ePub, and many other formats
+pavucontrol       PulseAudio volume control — manage per-app audio levels and devices
+localsend         Cross-platform LAN file sharing (like AirDrop)
+
+Documents for Okular if chosen
+discrete math textbook /home/will/projects/learning/math/discreteandapps/files/7theditiondiscreteandapps.pdf
+discrete math students guide /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
+latin wheellock textbook /home/will/projects/learning/latin/files/wheellockpdf.pdf
+lingua latina per se illustrata /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+
+
+
+
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:tool_runner:file path chosen: okular /home/will/projects/learning/latin/files/wheellockpdf.pdf
+INFO:tool_runner:tool name: open_application result: okular /home/will/projects/learning/latin/files/wheellockpdf.pdf opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:audio_converter:Started recording
+INFO:audio_converter:Finished recording
+INFO:audio_converter:Audio File Written
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:audio_converter:Transcribing audio file
+INFO:pywhispercpp.model:Transcribing ...
+INFO:pywhispercpp.model:Inference time: 0.997 s
+INFO:audio_converter:Transcribed text: Open volume control.
+INFO:tool_runner:mode: sys_admin context: Here is some useful context for executing commands in sys_admin mode: GUI Applications
+================
+
+Application       Description
+-----------       -----------
+alacritty         Fast, GPU-accelerated terminal emulator
+brave             Privacy-focused Chromium-based web browser
+firefox           Mozilla's open-source web browser
+blueman-manager   GUI for managing Bluetooth devices and connections
+feh               Lightweight image viewer, also used for setting wallpapers
+okular            KDE document viewer supporting PDF, ePub, and many other formats
+pavucontrol       PulseAudio volume control — manage per-app audio levels and devices
+localsend         Cross-platform LAN file sharing (like AirDrop)
+
+Documents for Okular if chosen
+discrete math textbook /home/will/projects/learning/math/discreteandapps/files/7theditiondiscreteandapps.pdf
+discrete math students guide /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
+latin wheellock textbook /home/will/projects/learning/latin/files/wheellockpdf.pdf
+lingua latina per se illustrata /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+
+
+
+
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/./ubix.py", line 154, in on_press
+    output = self.tool_runner.execute(command)
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/tool_runner.py", line 186, in execute
+    result = self.execute_tool(tool_name, tool_args, command)
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/tool_runner.py", line 110, in execute_tool
+    if(args['file_path']):
+       ~~~~^^^^^^^^^^^^^
+KeyError: 'file_path'

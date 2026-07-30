@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta:__legacy__"
+
+[project]
+name = "ubix"
+version = "0.1.0"
+description = "Ubix - AI assistant tool runner"
+requires-python = ">=3.12"
+dependencies = [
+    "openai",
+    "libtmux",
+    "pynput",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

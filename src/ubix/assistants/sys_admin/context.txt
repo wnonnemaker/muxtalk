@@ -1,0 +1,22 @@
+GUI Applications
+================
+
+Application       Description
+-----------       -----------
+alacritty         Fast, GPU-accelerated terminal emulator
+brave             Privacy-focused Chromium-based web browser
+firefox           Mozilla's open-source web browser
+blueman-manager   GUI for managing Bluetooth devices and connections
+feh               Lightweight image viewer, also used for setting wallpapers
+okular            KDE document viewer supporting PDF, ePub, and many other formats
+pavucontrol       PulseAudio volume control — manage per-app audio levels and devices
+localsend         Cross-platform LAN file sharing (like AirDrop)
+
+Documents for Okular if chosen
+discrete math textbook /home/will/projects/learning/math/discreteandapps/files/7theditiondiscreteandapps.pdf
+discrete math students guide /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
+latin wheellock textbook /home/will/projects/learning/latin/files/wheellockpdf.pdf
+lingua latina per se illustrata /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+
+
+

@@ -2,9 +2,11 @@
 import libtmux
 
 server = libtmux.Server()
-print(server.sessions)
-print(server.sessions[3].windows[1])
-claude = server.sessions[3].windows[1].panes[0]
-fulltext = 'hello claude'
-claude.send_keys(fulltext, enter=True)
+text = "wer"
+print(len(text))
+for session in server.sessions:
+    for window in session.windows:
+        text = str(window.panes)
+print(len(text))
+
 

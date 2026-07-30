@@ -6,6 +6,13 @@ import threading
 import os
 import json
 import subprocess
+import libtmux
+import logging
+import importlib.resources
+
+pkg_root = importlib.resources.files("ubix")
+
+logger = logging.getLogger(__name__)
 
 
 mode_path = "/tmp/ubixmode"
@@ -18,7 +25,7 @@ def contains_insensitive(text, regexlist):
     return False
 
 def build_mode_json():
-    input_path = "modes.txt"  # path to the text file to read
+    input_path = pkg_root / "modes.txt"  # path to the text file to read
 
     with open(input_path, "r", encoding="utf-8") as f:
         description = f.read().strip()
@@ -48,6 +55,7 @@ def print_json(my_json):
 class ToolRunner():
     def __init__(self):
         self.change_mode("sys_admin")
+        self.mode_context = self.get_mode_context("sys_admin")
         api_key = os.environ.get("ANTHROPIC_API_KEY")
         self.client = OpenAI(
             api_key=api_key,
@@ -59,26 +67,54 @@ class ToolRunner():
 
     def change_mode(self, mode):
         self.mode = mode
-        assistant_tools_path = "assistants/" + mode + "/functions.json"
+        assistant_tools_path = pkg_root / "assistants" / mode / "functions.json"
         with open(assistant_tools_path) as f:
             tools = json.load(f)
         tools.append(build_mode_json())
         self.tools = tools
+        self.mode_context = self.get_mode_context(mode)
         with open(mode_path, "w") as f:
             f.write(mode)
         return 0
 
+    def get_mode_context(self, mode):
+        context = ""
+        assistant_context_path = pkg_root / "assistants" / mode / "context.txt"
+        if os.path.exists(assistant_context_path):
+            with open(assistant_context_path) as f:
+                context = f.read()
+        match mode:
+            case "sys_admin":
+                context = context
+            case "accountant":
+                context = context
+            case "scribe":
+                server = libtmux.Server()
+                for session in server.sessions:
+                    for window in session.windows:
+                        context += str(window.panes)
+        return f'Here is some useful context for executing commands in {mode} mode: {context}'
+
+
     def execute_tool(self, tool, arguments, command):
         print(f'tool picked: {tool}')
         args = json.loads(arguments)
-        ledger_path = "/home/will/projects/software/ubix/files/pyubix/test.journal"
+        ledger_path = pkg_root / "test.journal"
         returncode = 0
-        ok_message = "command executed successfully"
+        output = ""
+        if tool == "chat":
+            return "tool: chat"
+
         match self.mode:
             case "sys_admin":
                 match tool:
                     case "open_application":
                         application = args['application']
+                        print(args)
+                        if(args['file_path']):
+                            application += " "
+                            application += args['file_path']
+                            logger.info(f'file path chosen: {application}')
                         result = os.system(f"{application} &")
                         return f"{application} opened with result {result}"
                     case "change_mode":
@@ -107,48 +143,65 @@ class ToolRunner():
             case "scribe":
                 match tool:
                     case "set_session_window_pane":
-                        returncode = subprocess.run(["muxtalk", "set", args['session_name'], args['window_number'], args['pane_number']], capture_output=True).returncode
-                    case "fallback":
+                        result = subprocess.run(
+                            ["muxtalk", "set", args['session_name'], args['window_number'], args['pane_number']], 
+                            capture_output=True
+                        )
+                        output = result.stdout
+                        returncode = result.returncode
+                    case "set_enter_mode":
+                        returncode = subprocess.run(["muxtalk", "setenter", args['state']]).returncode
+                    case "write":
                         returncode = subprocess.run(["muxtalk", "talk", command]).returncode
                     case "change_mode":
                         returncode = self.change_mode(args['mode'])
 
         if(returncode == 0):
-            return ok_message
+            #0 is success
+            return f'tool: {tool}'
         if(returncode == 1):
-            return default_fail_message
+            #1 is fail
+            return 'there was a tool execution error!'
         if(returncode == 2):
             return "Error: selected tool did not match any cases"
 
 
     def execute(self, command):
         tools = self.tools
-        with open("prompt.md") as f:
+        with open(pkg_root / "prompt.md") as f:
             prompt = f.read()
         messages = [
                 {"role" : "user", "content": command},
-                {"role" : "system", "content": prompt}
+                {"role" : "system", "content": prompt},
+                {"role" : "system", "content": self.mode_context},
                 ]
+
         message = self.send_messages(messages)
         messages.append(message)
 
-        print(f'PreLoop System> {message.content}')
-        for i in range(0, len(message.tool_calls)):
-            tool = message.tool_calls[i]
-            tool_name = tool.function.name
-            tool_id = tool.id
-            tool_args = tool.function.arguments
+        if message.tool_calls:
+            for i in range(0, len(message.tool_calls)):
+                tool = message.tool_calls[i]
+                tool_name = tool.function.name
+                tool_id = tool.id
+                tool_args = tool.function.arguments
 
-            result = self.execute_tool(tool_name, tool_args, command)
-            #add tool call result to messages history
-            tool_result_message = {"role" : "tool", "tool_call_id": tool_id, "content" : result}
-            messages.append(tool_result_message)
-            #send new history to model
-            message = self.send_messages(messages)
-            messages.append(message)
-        print(f'PostLoop System> {message.content}')
-        #return mode after every call to keep callers updated on mode state
-        return self.mode
+                result = self.execute_tool(tool_name, tool_args, command)
+                logger.info(f'tool name: {tool_name} result: {result}')
+                #add tool call result to messages history
+                tool_result_message = {"role" : "tool", "tool_call_id": tool_id, "content" : result}
+                messages.append(tool_result_message)
+                #send new history to model
+                message = self.send_messages(messages)
+                messages.append(message)
+        else:
+            fake_args = json.dumps([])
+            if self.get_mode() == "scribe":
+                result = self.execute_tool("write", fake_args, command)
+                return result + "Wrote to muxtalk target"
+            else:
+                result = self.execute_tool("chat", fake_args, "")
+        return result + ', ' + message.content
             
 
     def send_messages(self, messages):
@@ -156,23 +209,5 @@ class ToolRunner():
             model="claude-haiku-4-5",
             messages=messages,
             tools=self.tools,
-            tool_choice="required"
         )
         return response.choices[0].message
-
-runner = ToolRunner()
-with open(mode_path) as f:
-    data = f.read()
-print(f'mode from file is: {data}')
-command = "Switch to scribe mode" 
-print(f'executing command: {command}')
-runner.execute(command)
-with open(mode_path) as f:
-    data = f.read()
-print(f'mode from file is: {data}')
-command = "set active pane to ubix 2 0" 
-print(f'executing command: {command}')
-runner.execute(command)
-command = "I remember it being a sunny day in philly" 
-print(f'executing command: {command}')
-runner.execute(command)

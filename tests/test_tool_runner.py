@@ -17,3 +17,9 @@ def test_switch_mode():
     command = "I remember it being a sunny day in philly" 
     print(f'executing command: {command}')
     runner.execute(command)
+
+def test_open_application():
+    runner = ToolRunner()
+    command = "open my math textbook" 
+    print(f'executing command: {command}')
+    runner.execute(command)

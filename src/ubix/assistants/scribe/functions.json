@@ -27,8 +27,17 @@
     {
         "type": "function",
         "function": {
-            "name": "fallback",
-            "description": "if the message is anything other than set pane or change mode, use this fallback function"
+            "name": "set_enter_mode",
+            "description": "change the enter mode of muxtalk, whether an enter automatically gets submitted as a keystroke after a dictation",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "state": {
+                        "type": "string",
+												"enum": ["true", "false"]
+                    }
+								}
+						}
         }
     }
 ]
