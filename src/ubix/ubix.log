@@ -823,3 +823,155 @@ Traceback (most recent call last):
     if(args['file_path']):
        ~~~~^^^^^^^^^^^^^
 KeyError: 'file_path'
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:ubix.audio_converter:Started recording
+INFO:ubix.audio_converter:Finished recording
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:ubix.audio_converter:Transcribing audio file
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/ubix.py", line 155, in on_press
+    command = self.audio_converter.transcribe()
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/audio_converter.py", line 43, in transcribe
+    segments = model.transcribe(pkg_root / 'output.wav')
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pywhispercpp/model.py", line 206, in transcribe
+    raise FileNotFoundError(media)
+FileNotFoundError: /home/will/projects/software/ubix/files/pyubix/src/ubix/output.wav
+INFO:__main__:Ubix Booting...
+INFO:ubix.audio_converter:Started recording
+INFO:ubix.audio_converter:Finished recording
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:ubix.audio_converter:Transcribing audio file
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/ubix.py", line 155, in on_press
+    command = self.audio_converter.transcribe()
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/audio_converter.py", line 43, in transcribe
+    segments = model.transcribe(pkg_root / 'output.wav')
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pywhispercpp/model.py", line 206, in transcribe
+    raise FileNotFoundError(media)
+FileNotFoundError: /home/will/projects/software/ubix/files/pyubix/src/ubix/output.wav
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:ubix.audio_converter:Started recording
+INFO:ubix.audio_converter:Finished recording
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:ubix.audio_converter:Transcribing audio file
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/ubix.py", line 155, in on_press
+    command = self.audio_converter.transcribe()
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/audio_converter.py", line 43, in transcribe
+    segments = model.transcribe(pkg_root / 'output.wav')
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pywhispercpp/model.py", line 206, in transcribe
+    raise FileNotFoundError(media)
+FileNotFoundError: /home/will/projects/software/ubix/files/pyubix/src/ubix/output.wav
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:ubix.audio_converter:Started recording
+INFO:ubix.audio_converter:Finished recording
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:ubix.audio_converter:Transcribing audio file
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/ubix.py", line 155, in on_press
+    command = self.audio_converter.transcribe()
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/audio_converter.py", line 43, in transcribe
+    segments = model.transcribe(pkg_root / 'output.wav')
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pywhispercpp/model.py", line 206, in transcribe
+    raise FileNotFoundError(media)
+FileNotFoundError: /home/will/projects/software/ubix/files/pyubix/src/ubix/output.wav
+INFO:__main__:Ubix Booting...
+INFO:__main__:Ubix Booting...
+INFO:ubix.audio_converter:Started recording
+INFO:ubix.audio_converter:Finished recording
+INFO:pywhispercpp.utils:Model base.en already exists in /home/will/.local/share/pywhispercpp/models
+INFO:pywhispercpp.model:Initializing the model ...
+INFO:ubix.audio_converter:Transcribing audio file
+ERROR:pynput.keyboard.Listener:Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 235, in inner
+    return f(self, *args, **kwargs)
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/xorg.py", line 494, in _handler
+    self._handle_message(self._display_stop, event, injected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/keyboard/_xorg.py", line 585, in _handle_message
+    self.on_press(key, injected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 153, in inner
+    if f(*args) is False:
+       ~^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pynput/_util/__init__.py", line 299, in <lambda>
+    return lambda *a: f(*a[:actual])
+                      ~^^^^^^^^^^^^^
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/ubix.py", line 155, in on_press
+    command = self.audio_converter.transcribe()
+  File "/home/will/projects/software/ubix/files/pyubix/src/ubix/audio_converter.py", line 43, in transcribe
+    segments = model.transcribe(pkg_root / 'output.wav')
+  File "/home/will/projects/software/ubix/files/pyubix/.venv/lib/python3.14/site-packages/pywhispercpp/model.py", line 206, in transcribe
+    raise FileNotFoundError(media)
+FileNotFoundError: /home/will/projects/software/ubix/files/pyubix/src/ubix/output.wav
+INFO:__main__:Ubix Booting...

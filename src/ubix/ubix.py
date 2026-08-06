@@ -1,7 +1,7 @@
 #!/home/will/projects/software/ubix/files/pyubix/.venv/bin/python3  
 from pynput.keyboard import Key, KeyCode, Listener
-from tool_runner import ToolRunner
-from audio_converter import AudioConverter
+from ubix.tool_runner import ToolRunner
+from ubix.audio_converter import AudioConverter
 from enum import StrEnum, Enum
 import threading
 import os
@@ -11,9 +11,12 @@ import tempfile
 import logging
 import importlib.resources
 
+pkg_root = importlib.resources.files("ubix")
+
 logger = logging.getLogger(__name__)
 fifo_path = "/tmp/ubix"
-pkg_root = importlib.resources.files("ubix")
+for name in logging.root.manager.loggerDict:
+    print(name)
 
 
 def build_mode_json():
@@ -172,7 +175,7 @@ class Conductor():
 
 
 def main():
-    logging.basicConfig(filename='ubix.log', level=logging.INFO)
+    logging.basicConfig(filename=pkg_root / 'ubix.log', level=logging.INFO)
     logger.info('Ubix Booting...')
     conductor = Conductor()
     listener = conductor.start_listener()

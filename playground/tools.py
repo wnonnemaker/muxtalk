@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-from ubix.tool_runner import ToolRunner
+import ubix
 import importlib.resources
+import logging
+from ubix.tool_runner import ToolRunner
 
 runner = ToolRunner()
-command = "open my math textbook" 
+command = "i want to see my latin textbook" 
 print(f'executing command: {command}')
 runner.execute(command)

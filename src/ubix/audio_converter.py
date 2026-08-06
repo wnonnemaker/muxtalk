@@ -60,7 +60,8 @@ class AudioConverter():
         sample_format = pyaudio.paInt16  
         channels = 2
         fs = 16000  
-        filename = pkg_root / "output.wav"
+        filename = pkg_root / 'output.wav'
+        logger.debug(filename)
 
         with noalsaerr():
             p = pyaudio.PyAudio()
