@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import os, sys, sysconfig
+import subprocess
+import threading
 
+from pynput.keyboard import Key, Listener
 from RealtimeSTT import AudioToTextRecorder
 
 from contextlib import contextmanager
@@ -20,18 +23,53 @@ def noalsaerr():
     yield
     asound.snd_lib_error_set_handler(None)
 
-
 _nvidia_lib = os.path.join(sysconfig.get_path("purelib"), "nvidia", "cublas", "lib")
 if os.path.isdir(_nvidia_lib) and _nvidia_lib not in os.environ.get("LD_LIBRARY_PATH", ""):
     os.environ["LD_LIBRARY_PATH"] = _nvidia_lib + ":" + os.environ.get("LD_LIBRARY_PATH", "")
     os.execv(sys.executable, [sys.executable] + sys.argv)
 
 
-def process_text(text):
-    print(text)
-
 if __name__ == "__main__":
     with noalsaerr():
-        with AudioToTextRecorder(enable_realtime_transcription = True) as recorder:
-            while True:
-                recorder.text(process_text)
+        recorder = AudioToTextRecorder()
+
+        recording = False
+        lock = threading.Lock()
+
+        def on_release(key):
+            global recording
+            if key != Key.ctrl_r:
+                return
+            with lock:
+                if not recording:
+                    recording = True
+                    recorder.start()
+                    print("\nRecording...", flush=True)
+                else:
+                    recording = False
+                    recorder.stop()
+                    text = recorder.text()
+                    if text and text.strip():
+                        subprocess.run(["muxtalk", "talk", text.strip()])
+                        print(f"  -> {text.strip()}")
+                    print("Stopped.", flush=True)
+
+        listener = Listener(on_release=on_release)
+        listener.start()
+
+        print("Ready. Press Right Ctrl to start/stop recording. Press Ctrl+C to quit.")
+
+        try:
+            listener.join()
+        except KeyboardInterrupt:
+            print("\nExiting...")
+        finally:
+            with lock:
+                if recording:
+                    recording = False
+                    recorder.stop()
+                    text = recorder.text()
+                    if text and text.strip():
+                        subprocess.run(["muxtalk", "talk", text.strip()])
+                        print(f"  -> {text.strip()}")
+            recorder.shutdown()

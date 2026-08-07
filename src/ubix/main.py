@@ -150,9 +150,7 @@ class Conductor():
             else:
                 #every line here is sequential, each will finish before running
                 #next line
-                self.audio_converter.stop_recording()
-                self.change_status(Status.transcribing)
-                command = self.audio_converter.transcribe()
+                command = self.audio_converter.stop_recording()
                 self.ubox_input(command)
                 #here write the command as User> 'command'
                 self.change_status(Status.executing)
