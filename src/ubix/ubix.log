@@ -9843,3 +9843,243 @@ INFO:faster_whisper:Detected language 'en' with probability 1.00
 INFO:ubix.audio_converter:Transcription: Okay, so I would like you to make changes in the main document and the red line documents. In section 5, I want you to take out the client support section. And I want you to take out the add, there's some language that says add, it's discretion, the contractor added discretion. Just say the contractor may step in to run the best directly, so that part is good. Also, do you think the captain 10 hours is a bit repetitive at some times? Just an idea.
 INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
 INFO:__main__:Ubix Shutting Down
+INFO:__main__:Ubix Booting...
+INFO:root:Initializing faster_whisper main transcription model tiny
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-tiny/revision/main "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-tiny/revision/main "HTTP/1.1 200 OK"
+INFO:faster_whisper:Processing audio with duration 00:01.620
+INFO:faster_whisper:Processing audio with duration 00:01.620
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:ubix.audio_converter:Started recording
+INFO:faster_whisper:Processing audio with duration 00:00.416
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.52
+INFO:faster_whisper:Processing audio with duration 00:00.608
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.62
+INFO:faster_whisper:Processing audio with duration 00:00.864
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'ar' with probability 0.21
+INFO:faster_whisper:Processing audio with duration 00:01.056
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.62
+INFO:faster_whisper:Processing audio with duration 00:01.184
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.60
+INFO:faster_whisper:Processing audio with duration 00:01.440
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.71
+INFO:faster_whisper:Processing audio with duration 00:01.632
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.62
+INFO:faster_whisper:Processing audio with duration 00:01.824
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.65
+INFO:faster_whisper:Processing audio with duration 00:02.080
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.65
+INFO:faster_whisper:Processing audio with duration 00:02.208
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.70
+INFO:faster_whisper:Processing audio with duration 00:02.400
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.64
+INFO:faster_whisper:Processing audio with duration 00:02.656
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.71
+INFO:faster_whisper:Processing audio with duration 00:02.848
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.76
+INFO:faster_whisper:Processing audio with duration 00:02.976
+INFO:ubix.audio_converter:Stopped recording, transcribing...
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.77
+INFO:faster_whisper:Processing audio with duration 00:02.976
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.77
+INFO:ubix.audio_converter:Transcription: Well, Latina textbook. Now!
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:ubix.tool_runner:file path chosen: okular /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+INFO:ubix.tool_runner:tool name: open_application result: okular /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Initializing faster_whisper main transcription model tiny
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-tiny/revision/main "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-tiny/revision/main "HTTP/1.1 200 OK"
+INFO:faster_whisper:Processing audio with duration 00:01.620
+INFO:faster_whisper:Processing audio with duration 00:01.620
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:ubix.audio_converter:Started recording
+INFO:faster_whisper:Processing audio with duration 00:00.128
+INFO:faster_whisper:VAD filter removed 00:00.128 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.28
+INFO:faster_whisper:Processing audio with duration 00:00.320
+INFO:faster_whisper:VAD filter removed 00:00.320 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.28
+INFO:faster_whisper:Processing audio with duration 00:00.576
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.57
+INFO:faster_whisper:Processing audio with duration 00:00.704
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.60
+INFO:faster_whisper:Processing audio with duration 00:00.896
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.77
+INFO:faster_whisper:Processing audio with duration 00:01.152
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.63
+INFO:faster_whisper:Processing audio with duration 00:01.344
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.60
+INFO:faster_whisper:Processing audio with duration 00:01.472
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.73
+INFO:faster_whisper:Processing audio with duration 00:01.728
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.75
+INFO:faster_whisper:Processing audio with duration 00:01.920
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.75
+INFO:faster_whisper:Processing audio with duration 00:02.112
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.82
+INFO:faster_whisper:Processing audio with duration 00:02.368
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.89
+INFO:faster_whisper:Processing audio with duration 00:02.496
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.94
+INFO:faster_whisper:Processing audio with duration 00:02.688
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.92
+INFO:faster_whisper:Processing audio with duration 00:02.944
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.95
+INFO:faster_whisper:Processing audio with duration 00:03.136
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.95
+INFO:faster_whisper:Processing audio with duration 00:03.392
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.93
+INFO:faster_whisper:Processing audio with duration 00:03.520
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.90
+INFO:faster_whisper:Processing audio with duration 00:03.712
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.95
+INFO:faster_whisper:Processing audio with duration 00:03.968
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.96
+INFO:faster_whisper:Processing audio with duration 00:04.160
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.97
+INFO:faster_whisper:Processing audio with duration 00:04.288
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.97
+INFO:faster_whisper:Processing audio with duration 00:04.544
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.96
+INFO:faster_whisper:Processing audio with duration 00:04.736
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.96
+INFO:ubix.audio_converter:Stopped recording, transcribing...
+INFO:faster_whisper:Processing audio with duration 00:04.800
+INFO:faster_whisper:VAD filter removed 00:00.048 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.96
+INFO:ubix.audio_converter:Transcription: Open my mathematics textbook now!
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:ubix.tool_runner:file path chosen: okular /home/will/projects/learning/math/discreteandapps/files/7theditiondiscreteandapps.pdf
+INFO:ubix.tool_runner:tool name: open_application result: okular /home/will/projects/learning/math/discreteandapps/files/7theditiondiscreteandapps.pdf opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:root:Initializing faster_whisper main transcription model tiny
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-tiny/revision/main "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-tiny/revision/main "HTTP/1.1 200 OK"
+INFO:faster_whisper:Processing audio with duration 00:01.620
+INFO:faster_whisper:Processing audio with duration 00:01.620
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:ubix.audio_converter:Started recording
+INFO:faster_whisper:Processing audio with duration 00:00.128
+INFO:faster_whisper:VAD filter removed 00:00.128 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.28
+INFO:faster_whisper:Processing audio with duration 00:00.320
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.42
+INFO:faster_whisper:Processing audio with duration 00:00.576
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.64
+INFO:faster_whisper:Processing audio with duration 00:00.704
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.42
+INFO:faster_whisper:Processing audio with duration 00:00.896
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.59
+INFO:faster_whisper:Processing audio with duration 00:01.152
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.76
+INFO:faster_whisper:Processing audio with duration 00:01.344
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.74
+INFO:faster_whisper:Processing audio with duration 00:01.472
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.65
+INFO:faster_whisper:Processing audio with duration 00:01.728
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.58
+INFO:faster_whisper:Processing audio with duration 00:01.920
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.77
+INFO:faster_whisper:Processing audio with duration 00:02.112
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.77
+INFO:faster_whisper:Processing audio with duration 00:02.368
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.77
+INFO:faster_whisper:Processing audio with duration 00:02.496
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.86
+INFO:faster_whisper:Processing audio with duration 00:02.752
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.85
+INFO:faster_whisper:Processing audio with duration 00:02.944
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.87
+INFO:faster_whisper:Processing audio with duration 00:03.136
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.85
+INFO:faster_whisper:Processing audio with duration 00:03.392
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.85
+INFO:faster_whisper:Processing audio with duration 00:03.520
+INFO:faster_whisper:VAD filter removed 00:00.112 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.86
+INFO:faster_whisper:Processing audio with duration 00:03.712
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.86
+INFO:faster_whisper:Processing audio with duration 00:03.968
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.91
+INFO:faster_whisper:Processing audio with duration 00:04.160
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.91
+INFO:faster_whisper:Processing audio with duration 00:04.288
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.95
+INFO:faster_whisper:Processing audio with duration 00:04.544
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.94
+INFO:faster_whisper:Processing audio with duration 00:04.736
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.92
+INFO:ubix.audio_converter:Stopped recording, transcribing...
+INFO:faster_whisper:Processing audio with duration 00:04.800
+INFO:faster_whisper:VAD filter removed 00:00.000 of audio
+INFO:faster_whisper:Detected language 'en' with probability 0.93
+INFO:ubix.audio_converter:Transcription: Open my Student Solutions Math Textbook.
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:ubix.tool_runner:file path chosen: okular /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
+INFO:ubix.tool_runner:tool name: open_application result: okular /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf opened with result 0
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
