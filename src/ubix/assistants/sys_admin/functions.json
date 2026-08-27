@@ -23,21 +23,65 @@
     {
         "type": "function",
         "function": {
-            "name": "connect_bt_device",
-            "description": "Open an application on the user's computer",
+            "name": "edit_bt_connection",
+            "description": "Connect or disconnect a bluetooth device on this system",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "application": {
+                    "device_mac": {
                         "type": "string",
-                        "description": "The name of the application: e.g. pavucontrol, brave web browser, alacritty terminal emulator. The provided application should only be a binary, so it should only be one word, never provide more than one word or application with spaces"
+                        "description": "The mac address of the device to be edited"
+                    },
+                    "connect_or_disconnect": {
+                        "type": "string",
+												"enum": ["connect", "disconnect"],
+                        "description": "whether or not the device should be connected or disconnected"
+                    }
+                },
+                "required": ["device_mac", "connect_or_disconnect"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "media_player",
+            "description": "Change the state of the media player",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "action": {
+                        "type": "string",
+												"enum": ["play", "pause", "previous", "next"],
+                        "description": "Choose a media player action for linux command line utility playerctl. previous is last track, next is next track / skip track."
+                    }
+                },
+                "required": ["action"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "print_center",
+            "description": "Change the state of the media player",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "page_start": {
+                        "type": "string",
+                        "description": "The first page the user wants to print, if requesting a page range"
+                    },
+                    "page_end": {
+                        "type": "string",
+                        "description": "The last page the user wants to print, if requesting a page range"
                     },
                     "file_path": {
                         "type": "string",
-                        "description": "If the user specifies a program with a certain input argument, provide the filepath. E.g. 'open my favorite document'-> application: okular  file_path: /home/will/myfavdoc.pdf"
+                        "description": "The file path of the document the user wants to print"
                     }
                 },
-                "required": ["application"]
+                "required": ["file_path"]
             }
         }
     }

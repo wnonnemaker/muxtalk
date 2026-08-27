@@ -84,7 +84,6 @@ tqdm==4.68.3
 triton==3.7.1
 typing-inspection==0.4.2
 typing_extensions==4.15.0
--e git+ssh://git@github.com/wnonnemaker/muxtalk.git@5faf65d6c86d56eff6a88c6f0acea5d0a4efb101#egg=ubix
 urllib3==2.7.0
 webrtcvad-wheels==2.0.14
 websocket-client==1.9.0

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3 
 from openai import OpenAI
 from datetime import datetime
+from dataclasses import dataclass
+from subprocess import CompletedProcess
 import time
 import threading
 import os
@@ -52,14 +54,34 @@ def build_mode_json():
 def print_json(my_json):
     print(json.dumps(my_json, indent=2))
 
+def run_cmd(result: ExectutionResult, args: list[str]) -> CompletedProcess:
+    comp = subprocess.run(args, capture_output=True, text=True)
+    newResult = result
+    if comp.returncode == 0:
+        newResult.output = comp.stdout
+    else:
+        newResult.output = comp.stderr
+    newResult.returncode = comp.returncode
+    return newResult
+
+@dataclass
+class ExecutionResult:
+    returncode: int
+    tool: str
+    args: dict[str, str]
+    response: str
+    output: str
+
 class ToolRunner():
-    def __init__(self):
+    def __init__(self, test_mode=False):
         self.change_mode("sys_admin")
         self.mode_context = self.get_mode_context("sys_admin")
-        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        self.insert_locked = False
+        self.test_mode = test_mode
+        api_key = os.environ.get("MOONSHOT_API_KEY")
         self.client = OpenAI(
             api_key=api_key,
-            base_url="https://api.anthropic.com/v1/",
+            base_url="https://api.moonshot.ai/v1",
         )
 
     def get_mode(self):
@@ -95,32 +117,45 @@ class ToolRunner():
                         context += str(window.panes)
         return f'Here is some useful context for executing commands in {mode} mode: {context}'
 
+        
 
     def execute_tool(self, tool, arguments, command):
-        print(f'tool picked: {tool}')
         args = json.loads(arguments)
+        result = ExecutionResult(0, tool, args, "", "")
+        if self.test_mode:
+            return ExecutionResult(0, tool, args, f'fake {tool} ran successfully', "I am a fake AI response")
         ledger_path = pkg_root / "test.journal"
-        returncode = 0
-        output = ""
-        if tool == "chat":
-            return "tool: chat"
-
         match self.mode:
             case "sys_admin":
                 match tool:
                     case "open_application":
-                        application = args['application']
-                        print(args)
+                        cmd = args['application']
                         if(args['file_path']):
-                            application += " "
-                            application += args['file_path']
-                            logger.info(f'file path chosen: {application}')
-                        result = os.system(f"{application} &")
-                        return f"{application} opened with result {result}"
+                            cmd += " "
+                            cmd += args['file_path']
+                        result = run_cmd(result, [cmd, "&"])
+                    case "edit_bt_connection":
+                        device_mac = args['device_mac']
+                        action = args['connect_or_disconnect']
+                        result = run_cmd(result, ["bluetoothctl", action, device_mac])
+
+                    case "media_player":
+                        action = args['action']
+                        result = run_cmd(result, ["playerctl", action])
+                        return f"{result.stdout}"
+                    case "print_center":
+                        file_path = args['file_path'] 
+                        result = ""
+                        if(args['page_start']):
+                            start =args['page_start'] 
+                            end = args['page_end'] 
+                            result = run_cmd(result, ["lp", "-o", "fit-to-page", "-P", f'{start}-{end}', file_path])
+                        else:
+                            result = run_cmd(result, ["lp", "-o", "fit-to-page", file_path])
                     case "change_mode":
-                        returncode = self.change_mode(args['mode'])
+                        result.returncode = self.change_mode(args['mode'])
                     case _:
-                        returncode = 2
+                        result.returncode = 2
             case "accountant":
                 match tool:
                     case "create_ledger_entry":
@@ -132,41 +167,37 @@ class ToolRunner():
                         )
                         with open(ledger_path, "a") as f:
                             f.write(ledger_entry)
-                        return f"Added entry:\n{ledger_entry}"
+                        result.output = f"Added entry:\n{ledger_entry}"
                     case "display_ledger_file":
                         with open(ledger_path) as f:
-                            return f.read()
+                            result.output = f.read()
                     case "change_mode":
-                        returncode = self.change_mode(args['mode'])
-                    case _:
-                        returncode = 2
+                        result.returncode = self.change_mode(args['mode'])
             case "scribe":
                 match tool:
                     case "set_session_window_pane":
-                        result = subprocess.run(
-                            ["muxtalk", "set", args['session_name'], args['window_number'], args['pane_number']], 
-                            capture_output=True
-                        )
-                        output = result.stdout
-                        returncode = result.returncode
+                        result = run_cmd(result, ["muxtalk", "set", args['session_name'], args['window_number'], args['pane_number']])
                     case "set_enter_mode":
-                        returncode = subprocess.run(["muxtalk", "setenter", args['state']]).returncode
+                        result = run_cmd(result, ["muxtalk", "setenter", args['state']])
                     case "write":
-                        returncode = subprocess.run(["muxtalk", "talk", command]).returncode
+                        result = run_cmd(result, ["muxtalk", "talk", command])
                     case "change_mode":
-                        returncode = self.change_mode(args['mode'])
-
-        if(returncode == 0):
-            #0 is success
-            return f'tool: {tool}'
-        if(returncode == 1):
-            #1 is fail
-            return 'there was a tool execution error!'
-        if(returncode == 2):
-            return "Error: selected tool did not match any cases"
+                        result.returncode = self.change_mode(args['mode'])
+        return result
 
 
-    def execute(self, command):
+
+    def execute(self, command) -> ExecutionResult:
+        result = ExecutionResult(0, "notool", {}, "", "")
+        fake_args = json.dumps([])
+        if self.get_mode() == "scribe":
+            if command == "lock insert" or command == "unlock insert":
+                self.insert_locked = command.split()[0] == "lock"
+                result.tool = "toggle_insert"
+                return result
+            elif self.insert_locked:
+                result = self.execute_tool("write", fake_args, command)
+                return result
         tools = self.tools
         with open(pkg_root / "prompt.md") as f:
             prompt = f.read()
@@ -180,6 +211,7 @@ class ToolRunner():
         messages.append(message)
 
         if message.tool_calls:
+            #currently if the tool calls gets replenished during a tool call what happens?
             for i in range(0, len(message.tool_calls)):
                 tool = message.tool_calls[i]
                 tool_name = tool.function.name
@@ -187,26 +219,20 @@ class ToolRunner():
                 tool_args = tool.function.arguments
 
                 result = self.execute_tool(tool_name, tool_args, command)
-                logger.info(f'tool name: {tool_name} result: {result}')
+                logger.info(f'tool name: {tool_name} result: {result.output}')
                 #add tool call result to messages history
-                tool_result_message = {"role" : "tool", "tool_call_id": tool_id, "content" : result}
+                tool_result_message = {"role" : "tool", "tool_call_id": tool_id, "content" : result.output}
                 messages.append(tool_result_message)
                 #send new history to model
                 message = self.send_messages(messages)
                 messages.append(message)
-        else:
-            fake_args = json.dumps([])
-            if self.get_mode() == "scribe":
-                result = self.execute_tool("write", fake_args, command)
-                return result + "Wrote to muxtalk target"
-            else:
-                result = self.execute_tool("chat", fake_args, "")
-        return result + ', ' + message.content
+                result.response = message
+        return result
             
 
     def send_messages(self, messages):
         response = self.client.chat.completions.create(
-            model="claude-haiku-4-5",
+            model="kimi-k2.6",
             messages=messages,
             tools=self.tools,
         )

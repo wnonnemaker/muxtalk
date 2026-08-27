@@ -17,6 +17,12 @@ discrete math textbook /home/will/projects/learning/math/discreteandapps/files/7
 discrete math students guide /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
 latin wheellock textbook /home/will/projects/learning/latin/files/wheellockpdf.pdf
 lingua latina per se illustrata /home/will/projects/learning/latin/files/lingualatinaperseillustrata.pdf
+test file /home/will/projects/software/pyubix/playground/test.txt
 
+Bluetooth devices
+Sony BT headphones:
+Device AC:9B:0A:12:FA:DE MDR-ZX770BN
+Red Rocket JBL Speaker:
+Device 40:C1:F6:24:DD:68 Red Rocket
 
 
