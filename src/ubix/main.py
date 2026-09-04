@@ -162,12 +162,16 @@ class Conductor():
                     self.change_status(Status.executing)
                     self.ubox_output('executing...')
                     result = self.tool_runner.execute(command)
-                    self.ubox_output(result.output)
+
+                    logger.info(f'execution result: {result}')
+                    self.ubox_output(result.response)
                     self.change_status(Status.idle)
                     self.change_mode(self.tool_runner.get_mode())
             except Exception as e:
-                logger.error(e)
+                logger.exception(e)
                 self.ubox_output("There was an exception in CTRL_R if block")
+            finally: 
+                self.change_status(Status.idle)
 
     def on_release(self, key):
         if key == Key.ctrl_r:

@@ -176,7 +176,7 @@ class ToolRunner():
             case "scribe":
                 match tool:
                     case "set_session_window_pane":
-                        result = run_cmd(result, ["muxtalk", "set", args['session_name'], args['window_number'], args['pane_number']])
+                        result = run_cmd(result, ["muxtalk", "set", args['session_name'], args['window_number'], 0])
                     case "set_enter_mode":
                         result = run_cmd(result, ["muxtalk", "setenter", args['state']])
                     case "write":
@@ -226,7 +226,7 @@ class ToolRunner():
                 #send new history to model
                 message = self.send_messages(messages)
                 messages.append(message)
-                result.response = message
+                result.response = message.content
         return result
             
 
