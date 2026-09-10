@@ -78,10 +78,10 @@ class ToolRunner():
         self.mode_context = self.get_mode_context("sys_admin")
         self.insert_locked = False
         self.test_mode = test_mode
-        api_key = os.environ.get("MOONSHOT_API_KEY")
+        api_key = os.environ.get("DEEPSEEK_API_KEY")
         self.client = OpenAI(
             api_key=api_key,
-            base_url="https://api.moonshot.ai/v1",
+            base_url="https://api.deepseek.com",
         )
 
     def get_mode(self):
@@ -176,7 +176,7 @@ class ToolRunner():
             case "scribe":
                 match tool:
                     case "set_session_window_pane":
-                        result = run_cmd(result, ["muxtalk", "set", args['session_name'], args['window_number'], 0])
+                        result = run_cmd(result, ["muxtalk", "set", args['session_name'], args['window_number'], '0'])
                     case "set_enter_mode":
                         result = run_cmd(result, ["muxtalk", "setenter", args['state']])
                     case "write":
@@ -191,8 +191,14 @@ class ToolRunner():
         result = ExecutionResult(0, "notool", {}, "", "")
         fake_args = json.dumps([])
         if self.get_mode() == "scribe":
-            if command == "lock insert" or command == "unlock insert":
-                self.insert_locked = command.split()[0] == "lock"
+            logger.info(f'Insert locked: {self.insert_locked}')
+            stripped_command = command.replace(".", "")
+            stripped_command = stripped_command.lower()
+            if stripped_command == "lock insert" or stripped_command == "unlock insert":
+                split_string = stripped_command.split()
+                should_lock = stripped_command.split()[0] == "lock"
+                logger.info(f'Inside stripped command if, should_lock: {should_lock}')
+                self.insert_locked = should_lock
                 result.tool = "toggle_insert"
                 return result
             elif self.insert_locked:
@@ -232,7 +238,7 @@ class ToolRunner():
 
     def send_messages(self, messages):
         response = self.client.chat.completions.create(
-            model="kimi-k2.6",
+            model="deepseek-flash",
             messages=messages,
             tools=self.tools,
         )
