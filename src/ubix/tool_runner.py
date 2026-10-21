@@ -1,8 +1,9 @@
 #!/usr/bin/env python3 
-from openai import OpenAI
+from openai import OpenAI, AsyncOpenAI
 from datetime import datetime
 from dataclasses import dataclass
 from subprocess import CompletedProcess
+import asyncio
 import time
 import threading
 import os
@@ -52,6 +53,12 @@ def build_mode_json():
         }
     
 
+def parse_args(arguments):
+    try:
+        return json.loads(arguments) or {}
+    except json.JSONDecodeError:
+        return {}
+
 def print_json(my_json):
     print(json.dumps(my_json, indent=2))
 
@@ -96,6 +103,11 @@ class ToolRunner():
         self.test_mode = test_mode
         api_key = os.environ.get("DEEPSEEK_API_KEY")
         self.client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.deepseek.com",
+        )
+        #used by execute_async, which streams the reply as it is generated
+        self.async_client = AsyncOpenAI(
             api_key=api_key,
             base_url="https://api.deepseek.com",
         )
@@ -206,7 +218,8 @@ class ToolRunner():
 
 
 
-    def execute(self, command) -> ExecutionResult:
+    def scribe_shortcut(self, command) -> ExecutionResult | None:
+        #scribe commands that skip the model entirely; None means ask the model
         result = ExecutionResult(0, "notool", {}, "", "")
         fake_args = json.dumps([])
         if self.get_mode() == "scribe":
@@ -223,14 +236,23 @@ class ToolRunner():
             elif self.insert_locked:
                 result = self.execute_tool("write", fake_args, command)
                 return result
-        tools = self.tools
+        return None
+
+    def build_messages(self, command):
         with open(pkg_root / "prompt.md") as f:
             prompt = f.read()
-        messages = [
+        return [
                 {"role" : "system", "content": prompt},
                 {"role" : "system", "content": self.mode_context},
                 {"role" : "user", "content": command},
                 ]
+
+    def execute(self, command) -> ExecutionResult:
+        shortcut = self.scribe_shortcut(command)
+        if shortcut is not None:
+            return shortcut
+        result = ExecutionResult(0, "notool", {}, "", "")
+        messages = self.build_messages(command)
 
         message = self.send_messages(messages)
         messages.append(message)
@@ -251,6 +273,73 @@ class ToolRunner():
         result.response = message.content or ""
         return result
             
+
+    async def execute_async(self, command, emit) -> ExecutionResult:
+        """Same loop as execute, but streams: emit(type, **props) is called with
+        message.delta for each chunk of reply text, and tool.started / tool.done
+        around every tool call. Tools still run on a thread, they are blocking."""
+        shortcut = await asyncio.to_thread(self.scribe_shortcut, command)
+        if shortcut is not None:
+            return shortcut
+        result = ExecutionResult(0, "notool", {}, "", "")
+        messages = self.build_messages(command)
+
+        message = await self.stream_message(messages, emit)
+        messages.append(message)
+
+        for _ in range(MAX_TOOL_ROUNDS):
+            if not message.get("tool_calls"):
+                break
+            for call in message["tool_calls"]:
+                name = call["function"]["name"]
+                arguments = call["function"]["arguments"]
+                emit("tool.started", call_id=call["id"], tool=name, args=parse_args(arguments))
+                try:
+                    result = await asyncio.to_thread(self.execute_tool, name, arguments, command)
+                except json.JSONDecodeError:
+                    result = ExecutionResult(2, name, {}, "", f"invalid arguments: {arguments}")
+                logger.info(f'tool name: {name} result: {result.output}')
+                emit("tool.done", call_id=call["id"], tool=name, args=result.args,
+                     returncode=result.returncode, output=result.output)
+                messages.append({"role" : "tool", "tool_call_id": call["id"], "content" : result.output or ""})
+            message = await self.stream_message(messages, emit)
+            messages.append(message)
+        result.response = message["content"] or ""
+        return result
+
+    async def stream_message(self, messages, emit):
+        stream = await self.async_client.chat.completions.create(
+            model="deepseek-flash",
+            messages=messages,
+            tools=self.tools,
+            stream=True,
+        )
+        content = ""
+        #tool calls arrive in pieces: the id and name first, then the
+        #arguments json a few characters at a time, keyed by index
+        calls = {}
+        async for chunk in stream:
+            if not chunk.choices:
+                continue
+            delta = chunk.choices[0].delta
+            if delta.content:
+                content += delta.content
+                emit("message.delta", text=delta.content)
+            for piece in delta.tool_calls or []:
+                call = calls.setdefault(piece.index, {"id": "", "name": "", "arguments": ""})
+                if piece.id:
+                    call["id"] = piece.id
+                if piece.function and piece.function.name:
+                    call["name"] += piece.function.name
+                if piece.function and piece.function.arguments:
+                    call["arguments"] += piece.function.arguments
+        message = {"role": "assistant", "content": content or None}
+        if calls:
+            message["tool_calls"] = [
+                {"id": c["id"], "type": "function", "function": {"name": c["name"], "arguments": c["arguments"]}}
+                for _, c in sorted(calls.items())
+            ]
+        return message
 
     def send_messages(self, messages):
         response = self.client.chat.completions.create(

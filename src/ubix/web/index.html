@@ -172,6 +172,7 @@ const log = $("log"), scroller = $("scroll"), input = $("text"), sendBtn = $("se
 const STATUS_TEXT = { idle: "ready", rec: "listening", trans: "transcribing", exec: "working", off: "offline" };
 let thinking = null;
 const queued = new Map();   // prompt id -> bubble waiting at the bottom of the log
+let turn = null;            // the reply currently streaming in, see currentTurn()
 
 // ---- rendering (DOM nodes + textContent only: model output is never parsed as HTML)
 
@@ -188,6 +189,13 @@ function add(node) {
   // replies go above the spinner and any queued prompts, which stay at the bottom
   const anchor = thinking || queued.values().next().value;
   (anchor ? log.insertBefore(node, anchor) : log.append(node));
+  if (atBottom) scroller.scrollTop = scroller.scrollHeight;
+}
+
+// for content that grows in place: follow it down only if the user hasn't scrolled up
+function stick(update) {
+  const atBottom = scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 80;
+  update();
   if (atBottom) scroller.scrollTop = scroller.scrollHeight;
 }
 
@@ -209,13 +217,24 @@ function renderText(text) {
 function toolCard(p) {
   const d = el("details", "tool");
   const s = el("summary");
-  const ok = p.returncode === 0;
+  const running = p.returncode == null, ok = p.returncode === 0;
   s.append(el("span", "name", p.tool));
   s.append(el("span", "args", Object.entries(p.args || {}).map(([k, v]) => `${k}=${v}`).join("  ")));
-  s.append(el("span", "rc " + (ok ? "ok" : "bad"), ok ? "✓" : `exit ${p.returncode}`));
+  if (running) s.append(el("span", "spinner"));
+  else s.append(el("span", "rc " + (ok ? "ok" : "bad"), ok ? "✓" : `exit ${p.returncode}`));
   d.append(s);
-  d.append(el("pre", null, p.output || "(no output)"));
+  d.append(el("pre", null, running ? "running…" : p.output || "(no output)"));
   return d;
+}
+
+// one assistant reply, built up from message.delta and tool.* events:
+// text blocks and tool cards in the order they happened
+function currentTurn() {
+  if (!turn) {
+    turn = { box: el("div", "assistant"), block: null, raw: "", tools: new Map() };
+    add(turn.box);
+  }
+  return turn;
 }
 
 function setThinking(label) {
@@ -262,11 +281,49 @@ const handlers = {
     m.append(el("div", "bubble", p.text));
     add(m);
   },
+  "message.delta": p => stick(() => {
+    const t = currentTurn();
+    if (!t.block) {
+      t.raw = "";
+      t.block = renderText("");
+      t.box.append(t.block);
+    }
+    // re-render the whole block so a ``` fence turns into a code box as soon as it opens
+    t.raw += p.text;
+    const fresh = renderText(t.raw);
+    t.block.replaceWith(fresh);
+    t.block = fresh;
+  }),
+  "tool.started": p => stick(() => {
+    const t = currentTurn();
+    t.block = null;   // text after a tool call starts a new block below its card
+    const card = toolCard({ ...p, returncode: null });
+    t.tools.set(p.call_id, card);
+    t.box.append(card);
+  }),
+  "tool.done": p => stick(() => {
+    const t = currentTurn();
+    const card = toolCard(p), old = t.tools.get(p.call_id);
+    if (old) {
+      card.open = old.open;
+      old.replaceWith(card);
+    } else {
+      t.box.append(card);
+    }
+    t.tools.set(p.call_id, card);
+  }),
   "message.done": p => {
-    const m = el("div", "assistant");
-    if (p.tool !== "notool") m.append(toolCard(p));
-    m.append(renderText(p.response || (p.tool === "notool" ? p.output : "") || "Done."));
-    add(m);
+    if (turn) {
+      // already streamed; only fill in when the model ended without any text
+      if (!turn.box.querySelector(".text")) turn.box.append(renderText("Done."));
+    } else {
+      // nothing streamed (scribe shortcuts skip the model): render the result whole
+      const m = el("div", "assistant");
+      if (p.tool !== "notool") m.append(toolCard(p));
+      m.append(renderText(p.response || (p.tool === "notool" ? p.output : "") || "Done."));
+      add(m);
+    }
+    turn = null;
   },
   "session.status": p => setStatus(p.status),
   "session.mode": p => {
@@ -275,7 +332,7 @@ const handlers = {
     d.append("switched to ", el("b", null, p.mode), " mode");
     add(d);
   },
-  "session.error": p => add(el("div", "error", p.message)),
+  "session.error": p => { add(el("div", "error", p.message)); turn = null; },
 };
 
 const events = new EventSource("/event");

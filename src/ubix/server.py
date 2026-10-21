@@ -52,9 +52,9 @@ async def session_worker(runner: ToolRunner):
         bus.publish("message.user", id=prompt_id, text=command)
         set_status("exec")
         try:
-            # execute is blocking (OpenAI client + subprocess), so it runs on a
-            # thread; the loop keeps serving /event and /session/prompt meanwhile
-            result = await asyncio.to_thread(runner.execute, command)
+            # streams message.delta / tool.started / tool.done onto the bus as
+            # they happen; blocking tools run on a thread inside execute_async
+            result = await runner.execute_async(command, bus.publish)
             bus.publish("message.done", **asdict(result))
             if runner.get_mode() != state["mode"]:
                 state["mode"] = runner.get_mode()
