@@ -1,0 +1,4 @@
+[console_scripts]
+ubix-chat = ubix.chat:main
+ubix-dictator = ubix.dictator:main
+ubix-server = ubix.server:main

@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ubix</title>
+<script>
+  // ubix-chat opens ?app in a floating window: always dark there, like the old floatterm
+  if (new URLSearchParams(location.search).has("app")) document.documentElement.dataset.theme = "dark";
+</script>
+<style>
+  /* palette borrowed from opencode's default theme */
+  :root {
+    color-scheme: dark;
+    --bg: #0a0a0a; --layer-1: #141414; --layer-2: #1e1e1e; --border: #2a2a2a; --border-strong: #3a3a3a;
+    --text: #eeeeee; --text-weak: #8a8a8a;
+    --primary: #fab283; --accent: #9d7cd8; --success: #7fd88f; --warning: #f5a742; --error: #e06c75; --info: #56b6c2;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      color-scheme: light;
+      --bg: #ffffff; --layer-1: #f7f7f7; --layer-2: #efefef; --border: #e2e2e2; --border-strong: #cfcfcf;
+      --text: #1a1a1a; --text-weak: #8a8a8a;
+      --primary: #3b7dd8; --accent: #d68c27; --success: #3d9a57; --warning: #d68c27; --error: #d1383d; --info: #318795;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; display: flex; flex-direction: column;
+    background: var(--bg); color: var(--text);
+    font: 15px/1.6 var(--sans);
+  }
+
+  /* header */
+  header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px; border-bottom: 1px solid var(--border);
+  }
+  .logo { font: 600 14px var(--mono); letter-spacing: .2em; }
+  .conn { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-weak); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-weak); }
+  .conn[data-ok="true"] .dot { background: var(--success); }
+  .conn[data-ok="false"] .dot { background: var(--error); }
+
+  /* conversation */
+  #scroll { flex: 1; overflow-y: auto; }
+  #log {
+    max-width: 780px; margin: 0 auto; padding: 24px 20px 12px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .empty { margin: 18vh auto 0; text-align: center; color: var(--text-weak); }
+  .empty h2 { margin: 0 0 6px; font: 600 28px var(--mono); letter-spacing: .25em; color: var(--text); }
+
+  .user { align-self: flex-end; max-width: min(82%, 64ch); }
+  .user .bubble {
+    background: var(--layer-2); padding: 8px 12px; border-radius: 10px;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  .user.queued { opacity: .5; }
+  .user.queued::after { content: "queued"; display: block; text-align: right; font-size: 11px; color: var(--text-weak); }
+  .assistant { display: flex; flex-direction: column; gap: 8px; }
+  .assistant .text { white-space: pre-wrap; word-break: break-word; }
+  .assistant .text code { font: 13px var(--mono); background: var(--layer-2); padding: 1px 5px; border-radius: 4px; }
+  .assistant .text pre {
+    font: 13px/1.5 var(--mono); background: var(--layer-1); border: 1px solid var(--border);
+    padding: 10px 12px; border-radius: 8px; overflow-x: auto; margin: 4px 0;
+  }
+  .assistant .text pre code { background: none; padding: 0; }
+
+  .tool { border: 1px solid var(--border); border-radius: 8px; background: var(--layer-1); font-size: 13px; }
+  .tool summary {
+    list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px;
+    padding: 7px 12px; color: var(--text-weak);
+  }
+  .tool summary::-webkit-details-marker { display: none; }
+  .tool summary::before { content: "›"; transition: transform .15s; }
+  .tool[open] summary::before { transform: rotate(90deg); }
+  .tool .name { font-family: var(--mono); color: var(--text); }
+  .tool .args { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+  .tool .rc { font-family: var(--mono); }
+  .tool .rc.ok { color: var(--success); }
+  .tool .rc.bad { color: var(--error); }
+  .tool pre {
+    margin: 0; padding: 10px 12px; border-top: 1px solid var(--border);
+    font: 12px/1.5 var(--mono); white-space: pre-wrap; word-break: break-word; max-height: 320px; overflow-y: auto;
+  }
+
+  .error {
+    border: 1px solid color-mix(in srgb, var(--error) 40%, transparent);
+    background: color-mix(in srgb, var(--error) 10%, transparent);
+    color: var(--error); padding: 8px 12px; border-radius: 8px; font-size: 14px;
+  }
+  .divider {
+    display: flex; align-items: center; gap: 10px; color: var(--text-weak); font-size: 12px;
+  }
+  .divider::before, .divider::after { content: ""; flex: 1; border-top: 1px solid var(--border); }
+  .divider b { color: var(--accent); font-weight: 500; }
+
+  .thinking { color: var(--text-weak); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .spinner {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 2px solid var(--border-strong); border-top-color: var(--primary);
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* prompt dock */
+  .dock { padding: 8px 20px 18px; }
+  form {
+    max-width: 780px; margin: 0 auto;
+    border: 1px solid var(--border); border-radius: 12px; background: var(--layer-1);
+    transition: border-color .15s;
+  }
+  form:focus-within { border-color: var(--border-strong); }
+  textarea {
+    display: block; width: 100%; resize: none; border: 0; outline: 0; background: transparent;
+    color: var(--text); font: inherit; padding: 12px 14px 4px; max-height: 200px;
+  }
+  textarea::placeholder { color: var(--text-weak); }
+  .bar { display: flex; align-items: center; gap: 8px; padding: 6px 8px 8px 12px; }
+  .chip {
+    font: 12px var(--mono); padding: 2px 8px; border-radius: 6px;
+    background: var(--layer-2); color: var(--text-weak);
+  }
+  #mode { color: var(--accent); }
+  #status[data-s="rec"] { color: var(--error); }
+  #status[data-s="trans"] { color: var(--warning); }
+  #status[data-s="exec"] { color: var(--primary); }
+  #status[data-s="idle"] { color: var(--success); }
+  .hint { margin-left: auto; font-size: 12px; color: var(--text-weak); }
+  button {
+    width: 32px; height: 32px; border-radius: 8px; border: 0; cursor: pointer;
+    background: var(--primary); color: var(--bg); font-size: 16px; line-height: 1;
+  }
+  button:disabled { opacity: .35; cursor: default; }
+  @media (max-width: 520px) { .hint { display: none; } button { margin-left: auto; } }
+</style>
+</head>
+<body>
+<header>
+  <span class="logo">UBIX</span>
+  <span class="conn" id="conn"><span class="dot"></span><span id="connText">connecting</span></span>
+</header>
+
+<div id="scroll">
+  <main id="log">
+    <div class="empty" id="empty">
+      <h2>UBIX</h2>
+      <div>Type a command below, or hold right ctrl in the dictator.</div>
+    </div>
+  </main>
+</div>
+
+<div class="dock">
+  <form id="prompt">
+    <textarea id="text" rows="1" placeholder="Ask ubix to do something…" autofocus></textarea>
+    <div class="bar">
+      <span class="chip" id="mode">—</span>
+      <span class="chip" id="status" data-s="off">offline</span>
+      <span class="hint">enter to send · shift+enter for newline</span>
+      <button id="send" title="Send" disabled>↑</button>
+    </div>
+  </form>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const log = $("log"), scroller = $("scroll"), input = $("text"), sendBtn = $("send");
+const STATUS_TEXT = { idle: "ready", rec: "listening", trans: "transcribing", exec: "working", off: "offline" };
+let thinking = null;
+const queued = new Map();   // prompt id -> bubble waiting at the bottom of the log
+
+// ---- rendering (DOM nodes + textContent only: model output is never parsed as HTML)
+
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text != null) n.textContent = text;
+  return n;
+}
+
+function add(node) {
+  $("empty")?.remove();
+  const atBottom = scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 80;
+  // replies go above the spinner and any queued prompts, which stay at the bottom
+  const anchor = thinking || queued.values().next().value;
+  (anchor ? log.insertBefore(node, anchor) : log.append(node));
+  if (atBottom) scroller.scrollTop = scroller.scrollHeight;
+}
+
+// just enough markdown for chat replies: ``` fences and `inline code`
+function renderText(text) {
+  const box = el("div", "text");
+  text.split(/```[^\n]*\n?/).forEach((chunk, i) => {
+    if (i % 2) {
+      const pre = el("pre");
+      pre.append(el("code", null, chunk.replace(/\n$/, "")));
+      box.append(pre);
+    } else {
+      chunk.split(/`([^`\n]+)`/).forEach((part, j) => box.append(j % 2 ? el("code", null, part) : part));
+    }
+  });
+  return box;
+}
+
+function toolCard(p) {
+  const d = el("details", "tool");
+  const s = el("summary");
+  const ok = p.returncode === 0;
+  s.append(el("span", "name", p.tool));
+  s.append(el("span", "args", Object.entries(p.args || {}).map(([k, v]) => `${k}=${v}`).join("  ")));
+  s.append(el("span", "rc " + (ok ? "ok" : "bad"), ok ? "✓" : `exit ${p.returncode}`));
+  d.append(s);
+  d.append(el("pre", null, p.output || "(no output)"));
+  return d;
+}
+
+function setThinking(label) {
+  if (!label) { thinking?.remove(); thinking = null; return; }
+  if (!thinking) {
+    thinking = el("div", "thinking");
+    thinking.append(el("span", "spinner"), el("span"));
+    const firstQueued = queued.values().next().value;
+    (firstQueued ? log.insertBefore(thinking, firstQueued) : log.append(thinking));
+    scroller.scrollTop = scroller.scrollHeight;
+  }
+  thinking.lastChild.textContent = label;
+}
+
+function setStatus(s) {
+  $("status").dataset.s = s;
+  $("status").textContent = STATUS_TEXT[s] || s;
+  setThinking({ rec: "Listening…", trans: "Transcribing…", exec: "Thinking…" }[s]);
+}
+
+function setConn(ok, text) {
+  $("conn").dataset.ok = ok;
+  $("connText").textContent = text;
+}
+
+// ---- events from the server's bus, one handler per event type
+
+const handlers = {
+  "server.connected": p => { setConn(true, "connected"); $("mode").textContent = p.mode; setStatus(p.status); },
+  "server.heartbeat": () => {},
+  "message.queued": p => {
+    const m = el("div", "user queued");
+    m.append(el("div", "bubble", p.text));
+    $("empty")?.remove();
+    log.append(m);
+    queued.set(p.id, m);
+    scroller.scrollTop = scroller.scrollHeight;
+  },
+  "message.user": p => {
+    // the worker picked it up: move it out of the queue into the conversation
+    queued.get(p.id)?.remove();
+    queued.delete(p.id);
+    const m = el("div", "user");
+    m.append(el("div", "bubble", p.text));
+    add(m);
+  },
+  "message.done": p => {
+    const m = el("div", "assistant");
+    if (p.tool !== "notool") m.append(toolCard(p));
+    m.append(renderText(p.response || (p.tool === "notool" ? p.output : "") || "Done."));
+    add(m);
+  },
+  "session.status": p => setStatus(p.status),
+  "session.mode": p => {
+    $("mode").textContent = p.mode;
+    const d = el("div", "divider");
+    d.append("switched to ", el("b", null, p.mode), " mode");
+    add(d);
+  },
+  "session.error": p => add(el("div", "error", p.message)),
+};
+
+const events = new EventSource("/event");
+events.onmessage = e => {
+  const ev = JSON.parse(e.data);
+  (handlers[ev.type] || (() => console.log("unhandled event", ev)))(ev.properties);
+};
+// EventSource retries on its own; server.connected resyncs mode/status after
+events.onerror = () => { setConn(false, "reconnecting…"); setStatus("off"); };
+
+// ---- bare window (opened by ubix-chat with ?app)
+// a reload would wipe the conversation, since the server keeps no history yet,
+// so swallow the reload keys and the right-click menu (which has Reload in it)
+if (new URLSearchParams(location.search).has("app")) {
+  document.addEventListener("keydown", e => {
+    if (e.key === "F5" || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "r")) e.preventDefault();
+  });
+  document.addEventListener("contextmenu", e => e.preventDefault());
+}
+
+// ---- prompt box
+
+function autosize() {
+  input.style.height = "auto";
+  input.style.height = input.scrollHeight + "px";
+  sendBtn.disabled = !input.value.trim();
+}
+input.addEventListener("input", autosize);
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey && !e.isComposing) {
+    e.preventDefault();
+    $("prompt").requestSubmit();
+  }
+});
+
+$("prompt").addEventListener("submit", async e => {
+  e.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = "";
+  autosize();
+  // no local echo: the server publishes message.user to every client, this one included
+  try {
+    const r = await fetch("/session/prompt", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    if (!r.ok) throw new Error(`server returned ${r.status}`);
+  } catch (err) {
+    add(el("div", "error", `Could not send: ${err.message}`));
+    input.value = text;
+    autosize();
+  }
+});
+</script>
+</body>
+</html>

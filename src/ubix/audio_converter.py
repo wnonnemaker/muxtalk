@@ -35,15 +35,26 @@ if os.path.isdir(_nvidia_lib) and _nvidia_lib not in os.environ.get("LD_LIBRARY_
     os.execv(sys.executable, [sys.executable] + sys.argv)
 
 
+#tiny drafts the live text while you talk; medium.en redoes the whole
+#recording once you stop, and that final pass is what gets sent
+FINAL_MODEL = "medium.en"
+REALTIME_MODEL = "tiny"
+
+
 class AudioConverter():
     def __init__(self):
         self.should_record = False
-        self._recorder = None
+        #built once: loading medium.en takes seconds, too slow for every key press
+        with noalsaerr():
+            self._recorder = AudioToTextRecorder(
+                model=FINAL_MODEL,
+                realtime_model_type=REALTIME_MODEL,
+                enable_realtime_transcription=True,
+                language="en",
+            )
 
     def start_recording(self):
         self.should_record = True
-        with noalsaerr():
-            self._recorder = AudioToTextRecorder(enable_realtime_transcription=True)
         self._recorder.start()
         logger.info("Started recording")
 
@@ -52,7 +63,8 @@ class AudioConverter():
         self._recorder.stop()
         logger.info("Stopped recording, transcribing...")
         text = self._recorder.text()
-        self._recorder.shutdown()
-        self._recorder = None
         logger.info(f"Transcription: {text}")
         return text
+
+    def shutdown(self):
+        self._recorder.shutdown()

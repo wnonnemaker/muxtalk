@@ -11,7 +11,15 @@ dependencies = [
     "openai",
     "libtmux",
     "pynput",
+    "fastapi",
+    "uvicorn",
+    "httpx",
 ]
+
+[project.scripts]
+ubix-server = "ubix.server:main"
+ubix-dictator = "ubix.dictator:main"
+ubix-chat = "ubix.chat:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

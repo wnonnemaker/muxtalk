@@ -1,0 +1,73 @@
+2026-10-21 15:36:26,898 Dictator Booting...
+2026-10-21 15:36:26,934 Initializing faster_whisper main transcription model medium.en
+2026-10-21 15:36:27,344 HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-medium.en/revision/main "HTTP/1.1 200 OK"
+2026-10-21 15:36:27,764 HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-tiny/revision/main "HTTP/1.1 200 OK"
+2026-10-21 15:36:28,011 Processing audio with duration 00:01.620
+2026-10-21 15:36:28,036 VAD filter removed 00:00.000 of audio
+2026-10-21 15:37:55,513 Processing audio with duration 00:01.620
+2026-10-21 15:37:55,517 VAD filter removed 00:00.000 of audio
+2026-10-21 15:39:05,508 HTTP Request: POST http://127.0.0.1:4096/client/status "HTTP/1.1 204 No Content"
+2026-10-21 15:39:05,509 Started recording
+2026-10-21 15:39:05,702 Processing audio with duration 00:00.128
+2026-10-21 15:39:05,703 VAD filter removed 00:00.128 of audio
+2026-10-21 15:39:05,901 Processing audio with duration 00:00.320
+2026-10-21 15:39:05,903 VAD filter removed 00:00.320 of audio
+2026-10-21 15:39:06,102 Processing audio with duration 00:00.576
+2026-10-21 15:39:06,107 VAD filter removed 00:00.576 of audio
+2026-10-21 15:39:06,303 Processing audio with duration 00:00.768
+2026-10-21 15:39:06,306 VAD filter removed 00:00.768 of audio
+2026-10-21 15:39:06,503 Processing audio with duration 00:00.896
+2026-10-21 15:39:06,506 VAD filter removed 00:00.896 of audio
+2026-10-21 15:39:06,703 Processing audio with duration 00:01.152
+2026-10-21 15:39:06,707 VAD filter removed 00:01.152 of audio
+2026-10-21 15:39:06,904 Processing audio with duration 00:01.344
+2026-10-21 15:39:06,908 VAD filter removed 00:01.344 of audio
+2026-10-21 15:39:07,105 Processing audio with duration 00:01.536
+2026-10-21 15:39:07,110 VAD filter removed 00:01.536 of audio
+2026-10-21 15:39:07,305 Processing audio with duration 00:01.792
+2026-10-21 15:39:07,311 VAD filter removed 00:01.792 of audio
+2026-10-21 15:39:07,505 Processing audio with duration 00:01.920
+2026-10-21 15:39:07,512 VAD filter removed 00:01.920 of audio
+2026-10-21 15:39:07,706 Processing audio with duration 00:02.112
+2026-10-21 15:39:07,713 VAD filter removed 00:02.112 of audio
+2026-10-21 15:39:07,906 Processing audio with duration 00:02.368
+2026-10-21 15:39:07,914 VAD filter removed 00:02.368 of audio
+2026-10-21 15:39:08,107 Processing audio with duration 00:02.560
+2026-10-21 15:39:08,116 VAD filter removed 00:02.560 of audio
+2026-10-21 15:39:08,308 Processing audio with duration 00:02.816
+2026-10-21 15:39:08,317 VAD filter removed 00:02.816 of audio
+2026-10-21 15:39:08,508 Processing audio with duration 00:02.944
+2026-10-21 15:39:08,518 VAD filter removed 00:02.944 of audio
+2026-10-21 15:39:08,709 Processing audio with duration 00:03.136
+2026-10-21 15:39:08,719 VAD filter removed 00:03.136 of audio
+2026-10-21 15:39:08,909 Processing audio with duration 00:03.392
+2026-10-21 15:39:08,915 VAD filter removed 00:03.392 of audio
+2026-10-21 15:39:09,110 Processing audio with duration 00:03.584
+2026-10-21 15:39:09,121 VAD filter removed 00:03.584 of audio
+2026-10-21 15:39:09,310 Processing audio with duration 00:03.712
+2026-10-21 15:39:09,322 VAD filter removed 00:03.712 of audio
+2026-10-21 15:39:09,510 Processing audio with duration 00:03.968
+2026-10-21 15:39:09,523 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:09,711 Processing audio with duration 00:04.160
+2026-10-21 15:39:09,724 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:09,911 Processing audio with duration 00:04.352
+2026-10-21 15:39:09,925 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:10,112 Processing audio with duration 00:04.608
+2026-10-21 15:39:10,127 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:10,313 Processing audio with duration 00:04.736
+2026-10-21 15:39:10,321 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:10,514 Processing audio with duration 00:04.928
+2026-10-21 15:39:10,522 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:10,715 Processing audio with duration 00:05.184
+2026-10-21 15:39:10,731 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:10,915 Processing audio with duration 00:05.376
+2026-10-21 15:39:10,932 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:11,115 Processing audio with duration 00:05.504
+2026-10-21 15:39:11,129 HTTP Request: POST http://127.0.0.1:4096/client/status "HTTP/1.1 204 No Content"
+2026-10-21 15:39:11,135 Stopped recording, transcribing...
+2026-10-21 15:39:11,135 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:11,217 Processing audio with duration 00:05.632
+2026-10-21 15:39:11,226 VAD filter removed 00:03.344 of audio
+2026-10-21 15:39:11,502 Transcription: Um, hello, Ubix.
+2026-10-21 15:39:11,503 HTTP Request: POST http://127.0.0.1:4096/session/prompt "HTTP/1.1 202 Accepted"
+2026-10-21 15:50:02,204 Dictator Shutting Down

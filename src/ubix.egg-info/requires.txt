@@ -1,3 +1,6 @@
 openai
 libtmux
 pynput
+fastapi
+uvicorn
+httpx

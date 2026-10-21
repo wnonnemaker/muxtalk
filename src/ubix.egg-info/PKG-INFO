@@ -6,3 +6,6 @@ Requires-Python: >=3.12
 Requires-Dist: openai
 Requires-Dist: libtmux
 Requires-Dist: pynput
+Requires-Dist: fastapi
+Requires-Dist: uvicorn
+Requires-Dist: httpx

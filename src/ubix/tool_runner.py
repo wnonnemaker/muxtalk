@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 mode_path = "/tmp/ubixmode"
+MAX_TOOL_ROUNDS = 5
 
 def contains_insensitive(text, regexlist):
     lower_text = text.lower()
@@ -54,16 +55,6 @@ def build_mode_json():
 def print_json(my_json):
     print(json.dumps(my_json, indent=2))
 
-def run_cmd(result: ExectutionResult, args: list[str]) -> CompletedProcess:
-    comp = subprocess.run(args, capture_output=True, text=True)
-    newResult = result
-    if comp.returncode == 0:
-        newResult.output = comp.stdout
-    else:
-        newResult.output = comp.stderr
-    newResult.returncode = comp.returncode
-    return newResult
-
 @dataclass
 class ExecutionResult:
     returncode: int
@@ -71,6 +62,31 @@ class ExecutionResult:
     args: dict[str, str]
     response: str
     output: str
+
+def run_cmd(result: ExecutionResult, args: list[str]) -> ExecutionResult:
+    try:
+        comp = subprocess.run(args, capture_output=True, text=True)
+    except FileNotFoundError:
+        result.returncode = 127
+        result.output = f"command not found: {args[0]}"
+        return result
+    if comp.returncode == 0:
+        result.output = comp.stdout
+    else:
+        result.output = comp.stderr
+    result.returncode = comp.returncode
+    return result
+
+def launch(result: ExecutionResult, args: list[str]) -> ExecutionResult:
+    #gui apps keep running, so start them detached instead of waiting like run_cmd
+    try:
+        subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+    except FileNotFoundError:
+        result.returncode = 127
+        result.output = f"command not found: {args[0]}"
+        return result
+    result.output = f"launched {' '.join(args)}"
+    return result
 
 class ToolRunner():
     def __init__(self, test_mode=False):
@@ -129,11 +145,10 @@ class ToolRunner():
             case "sys_admin":
                 match tool:
                     case "open_application":
-                        cmd = args['application']
-                        if(args['file_path']):
-                            cmd += " "
-                            cmd += args['file_path']
-                        result = run_cmd(result, [cmd, "&"])
+                        cmd = [args['application']]
+                        if args.get('file_path'):
+                            cmd.append(os.path.expanduser(args['file_path']))
+                        result = launch(result, cmd)
                     case "edit_bt_connection":
                         device_mac = args['device_mac']
                         action = args['connect_or_disconnect']
@@ -142,13 +157,11 @@ class ToolRunner():
                     case "media_player":
                         action = args['action']
                         result = run_cmd(result, ["playerctl", action])
-                        return f"{result.stdout}"
                     case "print_center":
-                        file_path = args['file_path'] 
-                        result = ""
-                        if(args['page_start']):
-                            start =args['page_start'] 
-                            end = args['page_end'] 
+                        file_path = os.path.expanduser(args['file_path'])
+                        if args.get('page_start'):
+                            start = args['page_start']
+                            end = args.get('page_end', start)
                             result = run_cmd(result, ["lp", "-o", "fit-to-page", "-P", f'{start}-{end}', file_path])
                         else:
                             result = run_cmd(result, ["lp", "-o", "fit-to-page", file_path])
@@ -173,6 +186,8 @@ class ToolRunner():
                             result.output = f.read()
                     case "change_mode":
                         result.returncode = self.change_mode(args['mode'])
+                    case _:
+                        result.returncode = 2
             case "scribe":
                 match tool:
                     case "set_session_window_pane":
@@ -183,6 +198,10 @@ class ToolRunner():
                         result = run_cmd(result, ["muxtalk", "talk", command])
                     case "change_mode":
                         result.returncode = self.change_mode(args['mode'])
+                    case _:
+                        result.returncode = 2
+        if result.returncode == 2 and not result.output:
+            result.output = f"unknown tool {tool} in {self.mode} mode"
         return result
 
 
@@ -208,31 +227,28 @@ class ToolRunner():
         with open(pkg_root / "prompt.md") as f:
             prompt = f.read()
         messages = [
-                {"role" : "user", "content": command},
                 {"role" : "system", "content": prompt},
                 {"role" : "system", "content": self.mode_context},
+                {"role" : "user", "content": command},
                 ]
 
         message = self.send_messages(messages)
         messages.append(message)
 
-        if message.tool_calls:
-            #currently if the tool calls gets replenished during a tool call what happens?
-            for i in range(0, len(message.tool_calls)):
-                tool = message.tool_calls[i]
-                tool_name = tool.function.name
-                tool_id = tool.id
-                tool_args = tool.function.arguments
-
-                result = self.execute_tool(tool_name, tool_args, command)
-                logger.info(f'tool name: {tool_name} result: {result.output}')
-                #add tool call result to messages history
-                tool_result_message = {"role" : "tool", "tool_call_id": tool_id, "content" : result.output}
-                messages.append(tool_result_message)
-                #send new history to model
-                message = self.send_messages(messages)
-                messages.append(message)
-                result.response = message.content
+        #keep going while the model asks for tools, e.g. "connect my headphones
+        #then resume my music" is two rounds; capped so it can't loop forever
+        for _ in range(MAX_TOOL_ROUNDS):
+            if not message.tool_calls:
+                break
+            #every tool call in a turn needs its result before the next request
+            for tool in message.tool_calls:
+                result = self.execute_tool(tool.function.name, tool.function.arguments, command)
+                logger.info(f'tool name: {tool.function.name} result: {result.output}')
+                messages.append({"role" : "tool", "tool_call_id": tool.id, "content" : result.output or ""})
+            #mode may have changed, so send with the new mode's tools
+            message = self.send_messages(messages)
+            messages.append(message)
+        result.response = message.content or ""
         return result
             
 
