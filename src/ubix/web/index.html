@@ -69,6 +69,8 @@
     padding: 10px 12px; border-radius: 8px; overflow-x: auto; margin: 4px 0;
   }
   .assistant .text pre code { background: none; padding: 0; }
+  .assistant .text strong { font-weight: 600; }
+  .assistant .text .heading { font-size: 16px; }
 
   .tool { border: 1px solid var(--border); border-radius: 8px; background: var(--layer-1); font-size: 13px; }
   .tool summary {
@@ -199,7 +201,22 @@ function stick(update) {
   if (atBottom) scroller.scrollTop = scroller.scrollHeight;
 }
 
-// just enough markdown for chat replies: ``` fences and `inline code`
+// `code`, **bold** and *italic* inside one line. No _underscore_ italics:
+// they would mangle snake_case names like edit_bt_connection
+const INLINE = /`([^`\n]+)`|\*\*(?=\S)(.*?\S)\*\*|\*(?=[^\s*])(.*?[^\s*])\*/g;
+function renderInline(line, parent) {
+  let last = 0;
+  for (const m of line.matchAll(INLINE)) {
+    parent.append(line.slice(last, m.index));
+    if (m[1] != null) parent.append(el("code", null, m[1]));
+    else if (m[2] != null) renderInline(m[2], parent.appendChild(el("strong")));
+    else renderInline(m[3], parent.appendChild(el("em")));
+    last = m.index + m[0].length;
+  }
+  parent.append(line.slice(last));
+}
+
+// just enough markdown for chat replies: ``` fences, # headings, - bullets, and inline marks
 function renderText(text) {
   const box = el("div", "text");
   text.split(/```[^\n]*\n?/).forEach((chunk, i) => {
@@ -207,9 +224,21 @@ function renderText(text) {
       const pre = el("pre");
       pre.append(el("code", null, chunk.replace(/\n$/, "")));
       box.append(pre);
-    } else {
-      chunk.split(/`([^`\n]+)`/).forEach((part, j) => box.append(j % 2 ? el("code", null, part) : part));
+      return;
     }
+    chunk.split("\n").forEach((line, j) => {
+      if (j) box.append("\n");
+      const heading = line.match(/^#{1,6}\s+(.*)/);
+      const bullet = line.match(/^(\s*)[-*+]\s+(.*)/);
+      if (heading) {
+        renderInline(heading[1], box.appendChild(el("strong", "heading")));
+      } else if (bullet) {
+        box.append(bullet[1] + "• ");
+        renderInline(bullet[2], box);
+      } else {
+        renderInline(line, box);
+      }
+    });
   });
   return box;
 }
