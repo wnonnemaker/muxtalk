@@ -38,7 +38,11 @@ class Dictator():
         logger.info('Dictator Shutting Down')
         if self.audio_converter.should_record:
             self.audio_converter.stop_recording()
-            self.send_status("idle")
+        #ctrl+shift+d stops all of ubix: the server, and with it the chat window
+        try:
+            self.http.post("/server/shutdown", json={"reason": "ctrl+shift+d in dictator"}).raise_for_status()
+        except httpx.HTTPError as e:
+            logger.warning(f'could not shut down ubix-server: {e}')
         self.audio_converter.shutdown()
         self.http.close()
 

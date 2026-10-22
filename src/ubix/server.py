@@ -4,12 +4,14 @@ import itertools
 import json
 import logging
 import os
+import signal
 import tempfile
 from contextlib import asynccontextmanager
 from dataclasses import asdict
 from pathlib import Path
 from typing import Literal
 
+import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
@@ -25,6 +27,7 @@ bus = Bus()
 inbox: asyncio.Queue[tuple[int, str]] = asyncio.Queue()
 prompt_ids = itertools.count()
 state = {"mode": "sys_admin", "status": "idle"}
+loop: asyncio.AbstractEventLoop | None = None
 
 STATUS_PATH = os.path.join(
     os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "ubix", "status.json"
@@ -84,6 +87,8 @@ async def status_writer(q: asyncio.Queue):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # replaces main(): runs once when uvicorn starts, before any request
+    global loop
+    loop = asyncio.get_running_loop()
     runner = ToolRunner()
     state["mode"] = runner.get_mode()
     # subscribe before the worker starts so the writer can't miss an event
@@ -126,6 +131,28 @@ async def client_status(c: ClientStatus):
     set_status(c.status)
 
 
+def announce_shutdown():
+    # SSE streams never end on their own, and uvicorn waits for every open
+    # connection to close before it exits, so tell subscribers to hang up.
+    # threadsafe because this is also called from a signal handler
+    if loop is not None:
+        loop.call_soon_threadsafe(bus.publish, "server.shutdown")
+
+
+class Shutdown(BaseModel):
+    reason: str = "requested"
+
+
+@app.post("/server/shutdown", status_code=202)
+async def shutdown(s: Shutdown):
+    # the JSON body is required on purpose: a web page can't send JSON to
+    # another origin without CORS, so only local clients can stop ubix
+    logger.info(f"shutdown requested: {s.reason}")
+    announce_shutdown()
+    # same path as ctrl+c in the server's terminal
+    signal.raise_signal(signal.SIGINT)
+
+
 @app.get("/")
 async def index():
     return FileResponse(WEB_DIR / "index.html")
@@ -151,6 +178,8 @@ async def events():
                 try:
                     ev = await asyncio.wait_for(q.get(), timeout=10)
                     yield f"data: {ev.model_dump_json()}\n\n"
+                    if ev.type == "server.shutdown":
+                        return
                 except TimeoutError:
                     yield sse("server.heartbeat")
         finally:
@@ -160,10 +189,17 @@ async def events():
     return StreamingResponse(stream(), media_type="text/event-stream")
 
 
+class UbixServer(uvicorn.Server):
+    def handle_exit(self, sig, frame):
+        # ctrl+c / SIGTERM: close the event streams first, or uvicorn hangs
+        # on "Waiting for connections to close" while a chat window is open
+        announce_shutdown()
+        super().handle_exit(sig, frame)
+
+
 def main():
-    import uvicorn
     logging.basicConfig(format="%(asctime)s %(name)s %(message)s", level=logging.INFO)
-    uvicorn.run(app, host="127.0.0.1", port=4096)
+    UbixServer(uvicorn.Config(app, host="127.0.0.1", port=4096)).run()
 
 
 if __name__ == "__main__":

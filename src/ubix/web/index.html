@@ -171,6 +171,7 @@
 <script>
 const $ = id => document.getElementById(id);
 const log = $("log"), scroller = $("scroll"), input = $("text"), sendBtn = $("send");
+const APP_WINDOW = new URLSearchParams(location.search).has("app");   // opened by ubix-chat
 const STATUS_TEXT = { idle: "ready", rec: "listening", trans: "transcribing", exec: "working", off: "offline" };
 let thinking = null;
 const queued = new Map();   // prompt id -> bubble waiting at the bottom of the log
@@ -361,6 +362,13 @@ const handlers = {
     d.append("switched to ", el("b", null, p.mode), " mode");
     add(d);
   },
+  "server.shutdown": () => {
+    // stop EventSource from reconnecting to a server that is gone on purpose
+    events.close();
+    setConn(false, "server stopped");
+    setStatus("off");
+    if (APP_WINDOW) window.close();
+  },
   "session.error": p => { add(el("div", "error", p.message)); turn = null; },
 };
 
@@ -375,7 +383,7 @@ events.onerror = () => { setConn(false, "reconnecting…"); setStatus("off"); };
 // ---- bare window (opened by ubix-chat with ?app)
 // a reload would wipe the conversation, since the server keeps no history yet,
 // so swallow the reload keys and the right-click menu (which has Reload in it)
-if (new URLSearchParams(location.search).has("app")) {
+if (APP_WINDOW) {
   document.addEventListener("keydown", e => {
     if (e.key === "F5" || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "r")) e.preventDefault();
   });

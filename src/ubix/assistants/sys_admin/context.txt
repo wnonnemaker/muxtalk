@@ -17,6 +17,7 @@ discrete math textbook /home/will/projects/learning/math/discreteandapps/files/7
 discrete math students guide /home/will/projects/learning/math/discreteandapps/files/7theditionstudentguide.pdf
 latin wheellock textbook /home/will/projects/learning/latin/files/wheellockpdf.pdf
 lingua latina per se illustrata /home/will/projects/learning/latin/files/mainlingualatina.pdf
+lingua latina answers /home/will/projects/learning/latin/files/mainlingualatina.pdf
 test file /home/will/projects/software/pyubix/playground/test.txt
 
 Bluetooth devices
